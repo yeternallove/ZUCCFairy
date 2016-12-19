@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">来也</string>
+
+    <string name="today">今天</string>
+    <string name="yesterday">昨天</string>
+    <string name="days_ago">{count} 天前</string>
+    <string name="weeks_ago">{count} 周前</string>
+    <string name="months_ago">{count} 月前</string>
+    <string name="years_ago">{count} 年前</string>
+    <string name="comment_reply"> 回复</string>
+    <string name="action_like">赞</string>
+    <string name="action_comment">评论</string>
+
+    <string name="bottom_Nav_item_1">微信</string>
+    <string name="bottom_Nav_item_2">通讯录</string>
+    <string name="bottom_Nav_item_3">发现</string>
+    <string name="bottom_Nav_item_4">我</string>
+
+    <string name="btn_moments_text">朋友圈</string>
+    <string name="action_sign_in">登录</string>
+    <string name="checkBox_remember_pass">记住密码</string>
+    <string name="error_incorrect_password">密码错误</string>
+    <string name="error_invalid_email">邮箱地址无效</string>
+    <string name="error_invalid_password">密码输入过短</string>
+    <string name="title_activity_login">登录</string>
+    <string name="prompt_password">密码（可不填）</string>
+    <string name="error_field_required">这里有个小错误</string>
+    <string name="comment_me">我</string>
+    <string name="hours_ago">{count} 小时前</string>
+    <string name="minutes_ago">{count} 分钟前</string>
+    <string name="prompt_username">用户名</string>
+    <string name="permission_rationale">权限不够，无法读取邮件</string>
+</resources>

@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">AssistantLaiYe</string>
+    <string name="btn_moments_text">Moments</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="minutes_ago">{count} minutes ago</string>
+    <string name="hours_ago">{count} hours ago</string>
+    <string name="days_ago">{count} days ago</string>
+    <string name="weeks_ago">{count} weeks ago</string>
+    <string name="months_ago">{count} months ago</string>
+    <string name="years_ago">{count} years ago</string>
+    <string name="comment_reply">\@</string>
+    <string name="comment_me">me</string>
+    <string name="action_like">Like</string>
+    <string name="action_comment">Comment</string>
+
+    <string name="checkBox_remember_pass">remember pass</string>
+    <string name="bottom_Nav_item_1">Chats</string>
+    <string name="bottom_Nav_item_2">Contacts</string>
+    <string name="bottom_Nav_item_3">Discover</string>
+    <string name="bottom_Nav_item_4">Me</string>
+
+
+
+    <!-- Strings related to login -->
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+</resources>
