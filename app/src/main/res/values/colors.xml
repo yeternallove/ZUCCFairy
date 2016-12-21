@@ -6,6 +6,9 @@
 
     <color name="background">#F8F8F8</color>
     <color name="white">#fff</color>
+    <color name="blue">#66ccff</color>
+    <color name="azure">#effeff</color>
+    <color name="black">#000</color>
     <color name="colorGeneralName">#5A6E97</color>
     <color name="colorGeneralContent">#383838</color>
     <color name="colorGeneralDivider">#D3D3D3</color>
