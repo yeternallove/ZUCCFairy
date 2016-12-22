@@ -1,8 +1,9 @@
 <resources>
-    <string name="app_name">AssistantLaiYe</string>
+    <string name="app_name">ZUCCFairy</string>
     <string name="btn_moments_text">Moments</string>
     <string name="title_activity_login">Sign in</string>
 
+    <!-- date -->
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
     <string name="minutes_ago">{count} minutes ago</string>
@@ -16,11 +17,10 @@
     <string name="action_like">Like</string>
     <string name="action_comment">Comment</string>
 
-    <string name="checkBox_remember_pass">remember pass</string>
-    <string name="bottom_Nav_item_1">Chats</string>
-    <string name="bottom_Nav_item_2">Contacts</string>
-    <string name="bottom_Nav_item_3">Discover</string>
-    <string name="bottom_Nav_item_4">Me</string>
+    <string name="bot_item_1">OneKey</string>
+    <string name="bot_item_2">Calender</string>
+    <string name="bot_item_3">Me</string>
+    <string name="bot_item_send">Send</string>
 
 
 
@@ -36,4 +36,5 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="checkBox_remember_pass">remember pass</string>
 </resources>

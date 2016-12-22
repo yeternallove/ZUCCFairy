@@ -1,4 +1,4 @@
-package com.eternallove.demo.zuccfairy;
+package com.eternallove.demo.zuccfairy.util;
 
 import android.text.TextUtils;
 

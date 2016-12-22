@@ -5,6 +5,7 @@
     <color name="colorAccent">#46C01B</color>
 
     <color name="background">#F8F8F8</color>
+    <color name="bot_background">#f0f0f0</color>
     <color name="white">#fff</color>
     <color name="blue">#66ccff</color>
     <color name="azure">#effeff</color>

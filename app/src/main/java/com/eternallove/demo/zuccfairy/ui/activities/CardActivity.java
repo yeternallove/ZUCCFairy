@@ -1,15 +1,15 @@
 package com.eternallove.demo.zuccfairy.ui.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.eternallove.demo.zuccfairy.DateHelper;
+import com.eternallove.demo.zuccfairy.util.DateHelper;
 import com.eternallove.demo.zuccfairy.R;
 import com.eternallove.demo.zuccfairy.util.RoundImageView;
-
-import org.w3c.dom.Text;
 
 import java.util.Date;
 
@@ -17,11 +17,16 @@ import java.util.Date;
  * Created by angelzouxin on 2016/12/20.
  */
 
-public class CardAcitvity extends AppCompatActivity {
+public class CardActivity extends AppCompatActivity {
     private static String DATE_FORMAT = "yyyy年MM月dd日 HH:mm";
     private static final int TOP_Time = 5*60;
     private static final int BUTTON_Time = 10*60;
 
+    public static void actionStart(Context context){
+        Intent intent=new Intent();
+        intent.setClass(context,CardActivity.class);
+        context.startActivity(intent);
+    }
     //5:00~10:00打卡，在生成card前请先调用该函数判断时间
     public static int checkTime(){
         String datestr[] = DateHelper.dateToString(new Date(System.currentTimeMillis()), "HH:mm").split(":");
@@ -35,7 +40,7 @@ public class CardAcitvity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_punch_card);
-        init();
+//        init();
     }
 
     void init() {

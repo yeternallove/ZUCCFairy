@@ -2,7 +2,7 @@
 
 <!--use api 21-->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="?android:attr/textColorPrimary" android:state_checked="true"/>
-    <item android:color="?android:attr/textColorPrimary" android:state_pressed="true"/>
-    <item android:color="?android:attr/textColorSecondary"/>
+    <item android:state_checked="true" android:drawable="?android:attr/textColorPrimary" />
+    <item android:state_pressed="true" android:drawable="?android:attr/textColorPrimary" />
+    <item android:drawable="?android:attr/textColorSecondary" />
 </selector>
