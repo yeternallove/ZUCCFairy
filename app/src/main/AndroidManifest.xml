@@ -25,9 +25,6 @@
             android:label="@string/title_activity_login"
             android:theme="@style/NoActionBarTheme"></activity>
         <activity
-            android:name=".ui.activities.CardActivity"
-            android:theme="@style/NoActionBarTheme"></activity>
-        <activity
             android:name=".ui.activities.CalendarActivity"
             android:theme="@style/NoActionBarTheme"></activity>
     </application>
