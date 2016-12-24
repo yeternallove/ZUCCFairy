@@ -4,7 +4,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
@@ -17,81 +16,105 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
+        android:orientation="vertical"
         android:id="@+id/ll_bot_in"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/bot_background"
+        android:background="@color/bg_other"
         android:layout_alignParentBottom="true"
         android:translationY="@dimen/activity_select_height">
-
-        <ImageButton
-            android:layout_height="@dimen/activity_select_height"
-            android:layout_width="@dimen/activity_select_width"
-            android:scaleType="centerCrop"
-            android:padding="12dp"
-            app:srcCompat="@drawable/ic_select_dir"
-            android:id="@+id/ibtn_select_in"
-            android:onClick="shift"
-            android:background="@color/background"
-            style="@style/Widget.AppCompat.ImageButton" />
-
-        <EditText
-            android:layout_width="0dp"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorGeneralDate"/>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/edt_bot_send" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/bot_item_send"
-            android:layout_weight="0"
-            android:id="@+id/btn_bot_send"
-            style="@android:style/Widget.Material.Light.Button.Small" />
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_height="@dimen/activity_select_height"
+                android:layout_width="@dimen/activity_select_width"
+                android:scaleType="centerCrop"
+                android:padding="12dp"
+                app:srcCompat="@drawable/ic_select_dir"
+                android:id="@+id/ibtn_select_in"
+                android:onClick="shift"
+                android:background="@color/background"
+                style="@style/Widget.AppCompat.ImageButton" />
+            <View
+                android:layout_height="match_parent"
+                android:layout_width="1dp"
+                android:background="@color/colorGeneralDate"/>
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/edt_bot_send" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/bot_item_send"
+                android:layout_weight="0"
+                android:id="@+id/btn_bot_send"
+                style="@android:style/Widget.Material.Light.Button.Small" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_bot_dir"
-        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/bot_background">
-
-        <ImageButton
-            android:layout_height="@dimen/activity_select_height"
-            android:layout_width="@dimen/activity_select_width"
-            android:scaleType="centerCrop"
-            android:padding="12dp"
-            app:srcCompat="@drawable/ic_select_in"
-            android:id="@+id/ibtn_select_dir"
-            android:onClick="shift"
-            android:background="@color/background"
-            style="@style/Widget.AppCompat.ImageButton" />
-
-        <Button
-            android:text="@string/bot_item_1"
-            android:layout_width="0dp"
+        android:id="@+id/ll_bot_dir"
+        android:layout_alignParentBottom="true"
+        android:background="@color/bg_other">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorGeneralDate"/>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/bot_dir_1"
-            android:layout_weight="1"
-            style="@style/Widget.AppCompat.Button.Borderless" />
+            android:orientation="horizontal">
 
-        <Button
-            android:text="@string/bot_item_2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:id="@+id/bot_dir_2"
-            android:layout_weight="1"
-            style="@style/Widget.AppCompat.Button.Borderless" />
+            <ImageButton
+                android:layout_height="@dimen/activity_select_height"
+                android:layout_width="@dimen/activity_select_width"
+                android:scaleType="centerCrop"
+                android:padding="12dp"
+                app:srcCompat="@drawable/ic_select_in"
+                android:id="@+id/ibtn_select_dir"
+                android:onClick="shift"
+                android:background="@color/background"
+                style="@style/Widget.AppCompat.ImageButton" />
+            <View
+                android:layout_height="match_parent"
+                android:layout_width="1dp"
+                android:background="@color/colorGeneralDate"/>
+            <Button
+                android:text="@string/bot_item_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/bot_dir_1"
+                android:layout_weight="1"
+                style="@style/Widget.AppCompat.Button.Borderless" />
 
-        <Button
-            android:text="@string/bot_item_3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:id="@+id/bot_dir_3"
-            android:layout_weight="1"
-            style="@style/Widget.AppCompat.Button.Borderless" />
+            <Button
+                android:text="@string/bot_item_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/bot_dir_2"
+                android:layout_weight="1"
+                style="@style/Widget.AppCompat.Button.Borderless" />
+
+            <Button
+                android:text="@string/bot_item_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/bot_dir_3"
+                android:layout_weight="1"
+                style="@style/Widget.AppCompat.Button.Borderless" />
+        </LinearLayout>
     </LinearLayout>
 
 

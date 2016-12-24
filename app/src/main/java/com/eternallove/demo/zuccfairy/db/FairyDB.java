@@ -32,8 +32,8 @@ public class FairyDB {
     }
 
     public void saveUser(UserBean userBean){
-        final String sql_s = "SELECT * FROM User WHERE user_id = ? ";
-        final String sql_i = "INSERT INTO User(user_id,account,pwd,name,avatar,data) VALUES(?,?,?,?,?,?)";
+        final String sql_s = "SELECT * FROM User WHERE user_id = ? ";//select
+        final String sql_i = "INSERT INTO User(user_id,account,pwd,name,avatar,data) VALUES(?,?,?,?,?,?)";//insert
         Cursor c = db.rawQuery(sql_s, new String[]{userBean.getUser_id()});
         if (c.moveToFirst()){
             c.close();
@@ -43,9 +43,9 @@ public class FairyDB {
                 userBean.getAccount(), userBean.getPwd()
                 , userBean.getAvatar(), userBean.getName(), userBean.getData()});
     }
-    public boolean login(String user_id,String pwd){
-        final String sql = "SELECT pwd FROM User WHERE user_id = ? ";
-        Cursor c = db.rawQuery(sql, new String[]{user_id});
+    public boolean login(String account,String pwd){
+        final String sql = "SELECT pwd FROM User WHERE account = ? ";
+        Cursor c = db.rawQuery(sql, new String[]{account});
         if (c.moveToFirst()){
             String pwd2 = c.getString(0);
             if(pwd.equals(pwd2)){

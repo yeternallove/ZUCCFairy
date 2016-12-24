@@ -16,7 +16,10 @@
     <string name="comment_me">me</string>
     <string name="action_like">Like</string>
     <string name="action_comment">Comment</string>
+    <string name="daily_punch">Daily Punch</string>
+    <string name="homepage">Home</string>
 
+    <!-- 主页菜单 -->
     <string name="bot_item_1">OneKey</string>
     <string name="bot_item_2">Calender</string>
     <string name="bot_item_3">Me</string>
