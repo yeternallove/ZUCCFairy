@@ -33,10 +33,13 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.0.0'
     compile 'com.android.support:support-v4:25.0.0'
     compile 'com.android.support:palette-v7:25.0.0'
+    compile 'com.android.support:gridlayout-v7:25.1.0'
     // butterknife
     compile 'com.jakewharton:butterknife:8.2.1'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
     // glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
-
+    //RapidFloatingActionButton
+    compile 'com.github.wangjiegulu:RapidFloatingActionButton:1.0.3'
+    compile 'com.github.wangjiegulu:AndroidBucket:1.0.4'
 }

@@ -1,17 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.eternallove.demo.zuccfairy.MainActivity">
+    android:layout_height="match_parent">
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
-    <TextView
-        android:layout_width="wrap_content"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/ll_bot_in"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:background="@color/bg_other"
+        android:layout_alignParentBottom="true"
+        android:translationY="@dimen/activity_select_height">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorGeneralDate"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_height="@dimen/activity_select_height"
+                android:layout_width="@dimen/activity_select_width"
+                android:scaleType="centerCrop"
+                android:padding="12dp"
+                app:srcCompat="@drawable/ic_select_dir"
+                android:id="@+id/ibtn_select_in"
+                android:onClick="shift"
+                android:background="@color/background"
+                style="@style/Widget.AppCompat.ImageButton" />
+            <View
+                android:layout_height="match_parent"
+                android:layout_width="1dp"
+                android:background="@color/colorGeneralDate"/>
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/edt_bot_send" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/bot_item_send"
+                android:layout_weight="0"
+                android:id="@+id/btn_bot_send"
+                style="@android:style/Widget.Material.Light.Button.Small" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_bot_dir"
+        android:layout_alignParentBottom="true"
+        android:background="@color/bg_other">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorGeneralDate"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_height="@dimen/activity_select_height"
+                android:layout_width="@dimen/activity_select_width"
+                android:scaleType="centerCrop"
+                android:padding="12dp"
+                app:srcCompat="@drawable/ic_select_in"
+                android:id="@+id/ibtn_select_dir"
+                android:onClick="shift"
+                android:background="@color/background"
+                style="@style/Widget.AppCompat.ImageButton" />
+            <View
+                android:layout_height="match_parent"
+                android:layout_width="1dp"
+                android:background="@color/colorGeneralDate"/>
+            <Button
+                android:text="@string/bot_item_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/bot_dir_1"
+                android:layout_weight="1"
+                style="@style/Widget.AppCompat.Button.Borderless" />
+
+            <Button
+                android:text="@string/bot_item_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/bot_dir_2"
+                android:layout_weight="1"
+                style="@style/Widget.AppCompat.Button.Borderless" />
+
+            <Button
+                android:text="@string/bot_item_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/bot_dir_3"
+                android:layout_weight="1"
+                style="@style/Widget.AppCompat.Button.Borderless" />
+        </LinearLayout>
+    </LinearLayout>
+
+
 </RelativeLayout>

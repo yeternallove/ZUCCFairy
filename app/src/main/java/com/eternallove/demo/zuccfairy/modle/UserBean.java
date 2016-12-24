@@ -12,7 +12,15 @@ public class UserBean {
     private String name;
     private String avatar;
     private String data;
-
+    public UserBean(){}
+    public UserBean(String user_id,String account,String pwd,String name,String avatar,String data){
+        this.user_id = user_id;
+        this.account = account;
+        this.pwd = pwd;
+        this.name = name;
+        this.avatar = avatar;
+        this.data = data;
+    }
     public String getUser_id() {
         return user_id;
     }

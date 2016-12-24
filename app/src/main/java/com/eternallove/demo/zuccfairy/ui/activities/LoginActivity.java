@@ -69,20 +69,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
     private FairyDB fairyDB;
-    private boolean isremember;
+    private boolean isRemember;
     // UI references.
-    @BindView(R.id.autoText_login_username)
-    AutoCompleteTextView mEmailView;
-    @BindView(R.id.edt_login_password)
-    EditText mPasswordView;
-    @BindView(R.id.chk_login_remember_pass)
-    CheckBox rememberpass;
-    @BindView(R.id.scv_login_form)
-    View mProgressView;
-    @BindView(R.id.login_progress)
-    View mLoginFormView;
-    @BindView(R.id.btn_login_in)
-    Button mEmailSignInButton;
+    @BindView(R.id.autoText_login_username) AutoCompleteTextView mEmailView;
+    @BindView(R.id.edt_login_password)      EditText mPasswordView;
+    @BindView(R.id.chk_login_remember_pass) CheckBox rememberpass;
+    @BindView(R.id.scv_login_form)          View mLoginFormView;
+    @BindView(R.id.login_progress)          View mProgressView;
+    @BindView(R.id.btn_login_in)            Button mEmailSignInButton;
+
     public static void actionStart(Context context){
         Intent intent=new Intent();
         intent.setClass(context,LoginActivity.class);
@@ -94,12 +89,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         pref = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = pref.edit();
         // Set up the login form.
         populateAutoComplete();
 
         fairyDB = FairyDB.getInstance(this);
-        isremember = pref.getBoolean("remember_Password", false);
-        if (isremember) {
+        isRemember = pref.getBoolean("remember_Password", false);
+        if (isRemember) {
             String mEmail = pref.getString("mEmail","");
             String mPassword = pref.getString("mPassword","");
             mEmailView.setText(mEmail);
@@ -231,6 +227,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
+
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
@@ -241,12 +238,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * */
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+//        return email.contains("@");
+        return true;
     }
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+//        return password.length() > 4;
+        return true;
     }
 
     /**
@@ -351,23 +350,35 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mUserID;
+        private final String mAccount;
         private final String mPassword;
 
         UserLoginTask(String userID, String password) {
-            mUserID = userID;
+            mAccount = userID;
             mPassword = password;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-
+            user = new UserBean(0+"","a","a","测试者一号",R.drawable.ic_avatar_0+"",null);
+            fairyDB.saveUser(user);
             try {
-
+                boolean success = fairyDB.login(mAccount,mPassword);
+                if(success){//貌似写这里也不妥
+                    editor.putBoolean("remember_Password", true);
+                    editor.putString("mEmail", user.getAccount());
+                    editor.putString("mPassword", user.getPwd());
+                    editor.putString("mAvatar", user.getAvatar());
+                    editor.putInt("mId", 0);
+                }
+                else {
+                    editor.clear();
+                }
+                editor.commit();
                 // Simulate network access.
                 Thread.sleep(3000);
-                return fairyDB.login(mUserID,mPassword);
+                return success;
             } catch (InterruptedException e) {
                 return false;
             }
@@ -380,7 +391,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
-
             if (success) {
                 finish();
             } else {
