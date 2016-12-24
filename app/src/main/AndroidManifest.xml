@@ -23,10 +23,15 @@
         <activity
             android:name=".ui.activities.LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/NoActionBarTheme"></activity>
+            android:theme="@style/NoActionBarTheme" />
         <activity
             android:name=".ui.activities.CalendarActivity"
-            android:theme="@style/NoActionBarTheme"></activity>
+            android:theme="@style/NoActionBarTheme" />
+        <activity
+            android:name=".ui.activities.CardAcitvity"
+            android:theme="@style/NoActionBarTheme"
+            />
+
     </application>
 
 </manifest>

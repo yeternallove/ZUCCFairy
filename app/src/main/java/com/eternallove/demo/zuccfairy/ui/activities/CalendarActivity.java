@@ -81,3 +81,4 @@ public class CalendarActivity extends AppCompatActivity implements RapidFloating
         rfabHelper.toggleContent();
     }
 }
+

@@ -26,7 +26,6 @@
     <string name="bot_item_send">Send</string>
 
 
-
     <!-- Strings related to login -->
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
@@ -40,4 +39,8 @@
         completions."
     </string>
     <string name="checkBox_remember_pass">remember pass</string>
+    <string name="title_activity_aaaaa">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
 </resources>
