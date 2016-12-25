@@ -1,10 +1,16 @@
 package com.eternallove.demo.zuccfairy.db;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.eternallove.demo.zuccfairy.modle.AlarmBean;
 import com.eternallove.demo.zuccfairy.modle.UserBean;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * @description:
@@ -31,6 +37,10 @@ public class FairyDB {
         return mfairyDB;
     }
 
+    /**
+     * 保存用户到SQLite
+     * @param userBean
+     */
     public void saveUser(UserBean userBean){
         final String sql_s = "SELECT * FROM User WHERE user_id = ? ";//select
         final String sql_i = "INSERT INTO User(user_id,account,pwd,name,avatar,data) VALUES(?,?,?,?,?,?)";//insert
@@ -43,6 +53,13 @@ public class FairyDB {
                 userBean.getAccount(), userBean.getPwd()
                 , userBean.getAvatar(), userBean.getName(), userBean.getData()});
     }
+
+    /**
+     * 登录判断
+     * @param account
+     * @param pwd
+     * @return
+     */
     public boolean login(String account,String pwd){
         final String sql = "SELECT pwd FROM User WHERE account = ? ";
         Cursor c = db.rawQuery(sql, new String[]{account});
@@ -57,6 +74,12 @@ public class FairyDB {
             return false;
         }
     }
+
+    /**
+     * 查询用户信息
+      * @param user_id
+     * @return
+     */
     public UserBean queryUser(String user_id){
         UserBean userBean = new UserBean();
         final String sql = "SELECT user_id,account,pwd,name,avatar,data FROM User WHERE user_id = ? ";
@@ -72,6 +95,12 @@ public class FairyDB {
         c.close();
         return userBean;
     }
+
+    /**
+     * 更新用户信息
+     * @param userBean
+     * @return
+     */
     public boolean updateUser(UserBean userBean){
         final String sql = "UPDATE User " +
                 "SET user_id = ?, account = ?, pwd = ?, name = ?, avatar = ?, data = ? " +
@@ -85,5 +114,169 @@ public class FairyDB {
             return false;
         }
         return true;
+    }
+
+
+    /**
+     * 插入数据
+     */
+    public void insertAlarmDate(AlarmBean bean){
+        db.execSQL("insert into alarmlist(title,isAllday,isVibrate,year,month,day,startTimeHour," +
+                "startTimeMinute,endTimeHour,endTimeMinute,alarmTime,alarmColor,alarmTonePath,local," +
+                "description,replay) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",new Object[]{bean.getTitle(),bean.getIsAllday(),
+                bean.getIsVibrate(),bean.getYear(),bean.getMonth(),bean.getDay(),bean.getStartTimeHour(),bean.getStartTimeMinute(),bean.getEndTimeHour(),
+                bean.getEndTimeMinute(),bean.getAlarmTime(),bean.getAlarmColor(),bean.getAlarmTonePath(),bean.getLocal(),bean.getDescription(),bean.getReplay()});
+    }
+
+    /**
+     * 查询全部
+     */
+    public List<AlarmBean> getAll(){
+        List<AlarmBean> beanList = new ArrayList<AlarmBean>();
+        Cursor cursor = getCursor();
+        if (cursor.moveToFirst()) {
+            do{
+                AlarmBean bean = new AlarmBean();
+                bean.setId(cursor.getInt(0));
+                bean.setTitle(cursor.getString(1));
+                bean.setIsAllday(cursor.getInt(2));
+                bean.setIsVibrate(cursor.getInt(3));
+                bean.setYear(cursor.getInt(4));
+                bean.setMonth(cursor.getInt(5));
+                bean.setDay(cursor.getInt(6));
+                bean.setStartTimeHour(cursor.getInt(7));
+                bean.setStartTimeMinute(cursor.getInt(8));
+                bean.setEndTimeHour(cursor.getInt(9));
+                bean.setEndTimeMinute(cursor.getInt(10));
+                bean.setAlarmTime(cursor.getString(11));
+                bean.setAlarmColor(cursor.getString(12));
+                bean.setAlarmTonePath(cursor.getString(13));
+                bean.setLocal(cursor.getString(14));
+                bean.setDescription(cursor.getString(15));
+                bean.setReplay(cursor.getString(16));
+
+                beanList.add(bean);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return beanList;
+    }
+
+    /**
+     * 按照日期查找
+     * @return
+     */
+    public List<Object> getDataByDay(Calendar calendar){
+        List<Object> beanList = new ArrayList<>();
+        Cursor cursor = db.rawQuery("select * from alarmlist where year=? and month=? and day=?",
+                new String[]{calendar.get(Calendar.YEAR)+"",calendar.get(Calendar.MONTH)+"",calendar.get(Calendar.DAY_OF_MONTH)+""});
+        if(cursor.moveToFirst()){
+            do{
+                AlarmBean bean = new AlarmBean();
+                bean.setId(cursor.getInt(0));
+                bean.setTitle(cursor.getString(1));
+                bean.setIsAllday(cursor.getInt(2));
+                bean.setIsVibrate(cursor.getInt(3));
+                bean.setYear(cursor.getInt(4));
+                bean.setMonth(cursor.getInt(5));
+                bean.setDay(cursor.getInt(6));
+                bean.setStartTimeHour(cursor.getInt(7));
+                bean.setStartTimeMinute(cursor.getInt(8));
+                bean.setEndTimeHour(cursor.getInt(9));
+                bean.setEndTimeMinute(cursor.getInt(10));
+                bean.setAlarmTime(cursor.getString(11));
+                bean.setAlarmColor(cursor.getString(12));
+                bean.setAlarmTonePath(cursor.getString(13));
+                bean.setLocal(cursor.getString(14));
+                bean.setDescription(cursor.getString(15));
+                bean.setReplay(cursor.getString(16));
+
+                beanList.add(bean);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return beanList;
+    }
+
+    /**
+     * 按照id查找
+     * @return
+     */
+    public AlarmBean getDataById(int id){
+        Cursor cursor = db.rawQuery("select * from alarmlist where _id=?", new String[]{id + ""});
+        cursor.moveToNext();
+        AlarmBean bean = new AlarmBean();
+        bean.setId(cursor.getInt(0));
+        bean.setTitle(cursor.getString(1));
+        bean.setIsAllday(cursor.getInt(2));
+        bean.setIsVibrate(cursor.getInt(3));
+        bean.setYear(cursor.getInt(4));
+        bean.setMonth(cursor.getInt(5));
+        bean.setDay(cursor.getInt(6));
+        bean.setStartTimeHour(cursor.getInt(7));
+        bean.setStartTimeMinute(cursor.getInt(8));
+        bean.setEndTimeHour(cursor.getInt(9));
+        bean.setEndTimeMinute(cursor.getInt(10));
+        bean.setAlarmTime(cursor.getString(11));
+        bean.setAlarmColor(cursor.getString(12));
+        bean.setAlarmTonePath(cursor.getString(13));
+        bean.setLocal(cursor.getString(14));
+        bean.setDescription(cursor.getString(15));
+        bean.setReplay(cursor.getString(16));
+
+        return bean;
+    }
+
+    /**
+     * 删除指定数据
+     */
+    public void deleteDataById(int id) {
+        db.delete("alarmlist", "_id=?", new String[]{id+""});
+    }
+
+    public void updateDataById(int id,AlarmBean bean){
+        ContentValues values=new ContentValues();
+        values.put("title",bean.getTitle());
+        values.put("isAllday",bean.getIsAllday());
+        values.put("isVibrate",bean.getIsVibrate());
+        values.put("year",bean.getYear());
+        values.put("month",bean.getMonth());
+        values.put("day",bean.getDay());
+        values.put("startTimeHour",bean.getStartTimeHour());
+        values.put("startTimeMinute",bean.getStartTimeMinute());
+        values.put("endTimeHour",bean.getEndTimeHour());
+        values.put("endTimeMinute",bean.getEndTimeMinute());
+        values.put("alarmTime",bean.getAlarmTime());
+        values.put("alarmColor",bean.getAlarmColor());
+        values.put("alarmTonePath",bean.getAlarmTonePath());
+        values.put("local",bean.getLocal());
+        values.put("description",bean.getDescription());
+        values.put("replay",bean.getReplay());
+        db.update("alarmlist",values,"_id=?",new String[]{id+""});
+    }
+
+    public Cursor getCursor() {
+        // TODO Auto-generated method stub
+        String[] columns = new String[] {
+                "_id",
+                "title",
+                "isAllday",
+                "isVibrate",
+                "year",
+                "month",
+                "day",
+                "startTimeHour",
+                "startTimeMinute",
+                "endTimeHour",
+                "endTimeMinute",
+                "alarmTime",
+                "alarmColor",
+                "alarmTonePath",
+                "local",
+                "description",
+                "replay"
+        };
+        return db.query("alarmlist", columns, null, null, null, null,
+                null);
     }
 }

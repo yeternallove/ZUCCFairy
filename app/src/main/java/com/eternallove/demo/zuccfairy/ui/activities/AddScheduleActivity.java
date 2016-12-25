@@ -21,13 +21,13 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.eternallove.demo.zuccfairy.R;
-import com.eternallove.demo.zuccfairy.alarmremind.SendAlarmBroadcast;
-import com.eternallove.demo.zuccfairy.alarmsetactivity.SetAlarmTimeActivity;
-import com.eternallove.demo.zuccfairy.alarmsetactivity.SetAlarmToneActivity;
-import com.eternallove.demo.zuccfairy.alarmsetactivity.SetColorActivity;
-import com.eternallove.demo.zuccfairy.alarmsetactivity.SetLocalActivity;
-import com.eternallove.demo.zuccfairy.alarmsetactivity.SetRePlayActivity;
-import com.eternallove.demo.zuccfairy.db.AlarmDBSupport;
+import com.eternallove.demo.zuccfairy.Service.SendAlarmBroadcast;
+import com.eternallove.demo.zuccfairy.db.FairyDB;
+import com.eternallove.demo.zuccfairy.ui.activities.alarmset.SetAlarmTimeActivity;
+import com.eternallove.demo.zuccfairy.ui.activities.alarmset.SetAlarmToneActivity;
+import com.eternallove.demo.zuccfairy.ui.activities.alarmset.SetColorActivity;
+import com.eternallove.demo.zuccfairy.ui.activities.alarmset.SetLocalActivity;
+import com.eternallove.demo.zuccfairy.ui.activities.alarmset.SetRePlayActivity;
 import com.eternallove.demo.zuccfairy.modle.AlarmBean;
 import com.eternallove.demo.zuccfairy.util.ColorUtils;
 
@@ -48,7 +48,7 @@ public class AddScheduleActivity extends AppCompatActivity {
     private boolean isAllDay = false;
     private boolean isVibrate = false;
     private AlarmBean alarmBean = new AlarmBean();
-    private AlarmDBSupport support;
+    private FairyDB db;
     private int id;
 
     @BindView(R.id.alarm_title)
@@ -255,7 +255,7 @@ public class AddScheduleActivity extends AppCompatActivity {
 
         if (id == 0) {
             System.out.println("保存的数据:" + alarmBean.toString());
-            support.insertAlarmDate(alarmBean);
+            db.insertAlarmDate(alarmBean);
 
             SendAlarmBroadcast.startAlarmService(this);
 
@@ -264,7 +264,7 @@ public class AddScheduleActivity extends AppCompatActivity {
             finish();
         } else {
             System.out.println("更新的数据:" + alarmBean.toString());
-            support.updateDataById(id, alarmBean);
+            db.updateDataById(id, alarmBean);
 
             SendAlarmBroadcast.startAlarmService(this);
 
@@ -282,7 +282,7 @@ public class AddScheduleActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        support = new AlarmDBSupport(getApplicationContext());
+        db = CalendarActivity.getFairyDB();
         if (getIntent().getStringExtra("type").equals("DetailToAdd")) {
             Intent intent = getIntent();
             AlarmBean bean = (AlarmBean) intent.getSerializableExtra("AlarmBean");

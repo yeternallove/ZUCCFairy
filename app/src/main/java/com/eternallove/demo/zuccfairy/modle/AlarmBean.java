@@ -5,7 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
-import com.eternallove.demo.zuccfairy.alarmremind.AlarmAlertBroadcastReceiver;
+import com.eternallove.demo.zuccfairy.Service.AlarmAlertBroadcastReceiver;
 
 import java.io.Serializable;
 import java.util.Calendar;

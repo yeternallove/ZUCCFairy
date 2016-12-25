@@ -13,7 +13,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.eternallove.demo.zuccfairy.R;
-import com.eternallove.demo.zuccfairy.alarmremind.SendAlarmBroadcast;
+import com.eternallove.demo.zuccfairy.Service.SendAlarmBroadcast;
+import com.eternallove.demo.zuccfairy.db.FairyDB;
 import com.eternallove.demo.zuccfairy.util.PrefUtils;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
@@ -35,12 +36,17 @@ import butterknife.ButterKnife;
  */
 
 public class CalendarActivity extends AppCompatActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+    private static FairyDB db;
     @BindView(R.id.activity_main_rfal)
     RapidFloatingActionLayout rfaLayout;
     @BindView(R.id.activity_main_rfab)
     RapidFloatingActionButton rfaBtn;
 
     RapidFloatingActionHelper rfabHelper;
+
+    public static FairyDB getFairyDB() {
+        return db;
+    }
 
     public static void actionStart(Context context){
         Intent intent=new Intent();
@@ -56,7 +62,7 @@ public class CalendarActivity extends AppCompatActivity implements RapidFloating
         setContentView(R.layout.activity_calendar);
 
         ButterKnife.bind(this);
-
+        db = FairyDB.getInstance(this);
         initFab();
 
         //弹窗权限验证

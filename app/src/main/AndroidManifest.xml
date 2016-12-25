@@ -36,27 +36,27 @@
         <activity android:name=".ui.activities.CardAcitvity" />
 
         <activity android:name=".ui.activities.AddScheduleActivity" />
-        <activity android:name=".alarmsetactivity.SetAlarmTimeActivity" />
-        <activity android:name=".alarmsetactivity.SetAlarmToneActivity" />
-        <activity android:name=".alarmsetactivity.SetColorActivity" />
-        <activity android:name=".alarmsetactivity.SetLocalActivity" />
-        <activity android:name=".alarmsetactivity.SetRePlayActivity" />
+        <activity android:name=".ui.activities.alarmset.SetAlarmTimeActivity" />
+        <activity android:name=".ui.activities.alarmset.SetAlarmToneActivity" />
+        <activity android:name=".ui.activities.alarmset.SetColorActivity" />
+        <activity android:name=".ui.activities.alarmset.SetLocalActivity" />
+        <activity android:name=".ui.activities.alarmset.SetRePlayActivity" />
 
         <activity android:name=".ui.activities.AlarmRemindActivity" />
 
         <service
-            android:name=".alarmremind.AlarmService"
+            android:name=".Service.AlarmService"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:process="com.eternallove.demo.zuccFairy.serviceProcess"></service>
 
-        <receiver android:name=".alarmremind.AlarmServiceBroadcastReceiver">
+        <receiver android:name=".Service.AlarmServiceBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".alarmremind.AlarmAlertBroadcastReceiver"></receiver>
+        <receiver android:name=".Service.AlarmAlertBroadcastReceiver"></receiver>
     </application>
 
 </manifest>
