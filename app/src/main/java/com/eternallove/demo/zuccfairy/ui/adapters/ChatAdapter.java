@@ -11,7 +11,6 @@
 //import android.view.ViewGroup;
 //import android.widget.GridLayout;
 //import android.widget.ImageView;
-//import android.widget.LinearLayout;
 //import android.widget.TextView;
 //import android.widget.Toast;
 //
@@ -20,6 +19,7 @@
 //import com.bumptech.glide.load.engine.Resource;
 //import com.bumptech.glide.load.resource.SimpleResource;
 //import com.eternallove.demo.zuccfairy.R;
+//import com.eternallove.demo.zuccfairy.modle.ReceivedBean;
 //
 //import java.util.List;
 //
@@ -33,41 +33,36 @@
 // * @author: eternallove
 // * @date: 2016/11/7
 // */
-//public class ChatAdapter
-//        extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder> {
+//public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder> {
 //
-//    private static final int TYPE_HEAD = 0x0;
-//    private static final int TYPE_GENERAL = 0x1;
-//    private static final int[] ICON_LIST = new int[]{R.drawable.ic_avatar_0,R.drawable.ic_avatar_1,
-//            R.drawable.ic_avatar_2,R.drawable.ic_avatar_3,R.drawable.ic_avatar_4,R.drawable.ic_avatar_5,
-//            R.drawable.ic_avatar_6,R.drawable.ic_avatar_7,R.drawable.ic_avatar_8,R.drawable.ic_avatar_9};;
-//    private int ic_num = 0;
-//    private HeadBean mHeadBean;
-//    private List<MomentBean> mMomentBeanList;
+//    private static final int TYPE_MESSAGE_ME = 0x0;
+//    private static final int TYPE_PICTURE_OTHER = 0x1;
+//
+//    private List<ReceivedBean> mReceivedList;
 //
 //    private Context mContext;
 //
-//    public ChatAdapter(Context context,
-//                       HeadBean headBean,
-//                       List<MomentBean> momentBeanList) {
-//        this.mHeadBean = headBean;
-//        this.mMomentBeanList = momentBeanList;
+//    public ChatAdapter(Context context,List<ReceivedBean> receivedList) {
+//        this.mReceivedList = receivedList;
 //        this.mContext = context;
 //    }
 //
 //    @Override
 //    public int getItemViewType(int position) {
-//        return position == 0 ? TYPE_HEAD : TYPE_GENERAL;
+//        return TYPE_MESSAGE_ME;
 //    }
 //
 //    @Override
 //    public ReceivedHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        if (viewType == TYPE_HEAD) {
-//            return new MeMessageHolder(
-//                    LayoutInflater.from(mContext).inflate(R.layout.item_head, parent, false));
-//        }else {
-//            return new GeneralViewHolder(
-//                    LayoutInflater.from(mContext).inflate(R.layout.item_general, parent, false));
+//        switch (viewType){
+//            case TYPE_MESSAGE_ME:
+//                return new MessageHolder(
+//                        LayoutInflater.from(mContext).inflate(R.layout.row_received_me_message, parent, false));
+//                break;
+//            case TYPE_PICTURE_OTHER:
+//                return new GeneralViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_general, parent, false));
+//                break;
+//            default:return null;
 //        }
 //    }
 //
@@ -287,41 +282,34 @@
 //
 //    @Override
 //    public int getItemCount() {
-//        return mMomentBeanList.size() + 1;
+//        return mReceivedList.size() + 1;
 //    }
 //
 //    static class ReceivedHolder extends RecyclerView.ViewHolder {
 //
 //        ReceivedHolder(View itemView) {
 //            super(itemView);
-//            ButterKnife.bind(this, itemView);
+//            ButterKnife.bind(this,itemView);
 //        }
 //    }
 //
-//    static class MeMessageHolder extends ReceivedHolder {
+//    static class MessageHolder extends ReceivedHolder {
+//        @BindView(R.id.tv_chatcontent)  TextView tvChatContent;
+//        @BindView(R.id.timestamp)       TextView timestamp;
+//        @BindView(R.id.tv_userid)       TextView tvUserid;
+//        @BindView(R.id.img_userhead)    ImageView imgUserhead;
 //
-//        MeMessageHolder(View itemView) {
+//        MessageHolder(View itemView) {
 //            super(itemView);
 //        }
 //    }
-//
-//    static class MePictureHolder extends ReceivedHolder{
-//
-//        MePictureHolder(View itemView) {
-//            super(itemView);
-//        }
-//    }
-//
-//    static class OtherMessageHolder extends ReceivedHolder {
-//
-//        OtherMessageHolder(View itemView) {
-//            super(itemView);
-//        }
-//    }
-//
-//    static class OtherPictureHolder extends ReceivedHolder{
-//
-//        OtherPictureHolder(View itemView) {
+//    static class PicturHolder extends ReceivedHolder {
+////TODO
+////        @BindView(R.id.tv_chatcontent)  TextView tvChatContent;
+////        @BindView(R.id.timestamp)       TextView timestamp;
+////        @BindView(R.id.tv_userid)       TextView tvUserid;
+////        @BindView(R.id.img_userhead)    ImageView imgUserhead;
+//        PicturHolder(View itemView) {
 //            super(itemView);
 //        }
 //    }

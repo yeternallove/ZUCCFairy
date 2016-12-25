@@ -367,8 +367,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 boolean success = fairyDB.login(mAccount,mPassword);
                 if(success){//貌似写这里也不妥
                     editor.putBoolean("remember_Password", true);
-                    editor.putString("mEmail", user.getAccount());
+                    editor.putString("mAccount", user.getAccount());
                     editor.putString("mPassword", user.getPwd());
+                    editor.putString("mName", user.getName());
                     editor.putString("mAvatar", user.getAvatar());
                     editor.putInt("mId", 0);
                 }

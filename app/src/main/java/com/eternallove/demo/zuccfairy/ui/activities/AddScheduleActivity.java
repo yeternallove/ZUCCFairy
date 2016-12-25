@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -255,7 +256,8 @@ public class AddScheduleActivity extends AppCompatActivity {
 
         if (id == 0) {
             System.out.println("保存的数据:" + alarmBean.toString());
-            db.insertAlarmDate(alarmBean);
+            alarmBean.setUser_id(PreferenceManager.getDefaultSharedPreferences(this).getInt("mId",-1)+"");
+            db.saveAlarmDate(alarmBean);
 
             SendAlarmBroadcast.startAlarmService(this);
 

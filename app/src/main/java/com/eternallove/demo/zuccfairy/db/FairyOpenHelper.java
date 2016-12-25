@@ -13,13 +13,14 @@ public class FairyOpenHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_USER = "create table User("
             + "user_id text primary key,"
-            + "account text,"
-            + "pwd text,"
-            + "name text,"
+            + "account char(20),"
+            + "pwd char(20),"
+            + "name char(20),"
             + "avatar text,"
             + "data text)";
 
-    public static  final String CREATE_ALARM = "create table AlarmList(_id integer primary key autoincrement,"
+    public static  final String CREATE_ALARM = "create table AlarmList(id integer primary key autoincrement,"
+            + "user_id char(20),"
             + "title char(20),"
             + "isAllday int(20),"
             + "isVibrate int(20),"
@@ -36,6 +37,12 @@ public class FairyOpenHelper extends SQLiteOpenHelper {
             + "local char(20),"
             + "description char(100),"
             + "replay char(20))";
+
+    public static final String CREATE_RECEIVED = "create table Received(id integer primary key autoincrement," +
+            "user_id char(20)," +
+            "timestampe long ," +
+            "message text ," +
+            "picture text )";
     public FairyOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -44,12 +51,14 @@ public class FairyOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_USER);
         db.execSQL(CREATE_ALARM);
+        db.execSQL(CREATE_RECEIVED);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("drop table if exists User");
         db.execSQL("drop table if exists AlarmList");
+        db.execSQL("drop table if exists Received");
         onCreate(db);
     }
 }

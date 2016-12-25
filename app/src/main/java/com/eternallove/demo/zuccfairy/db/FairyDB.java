@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.eternallove.demo.zuccfairy.modle.AlarmBean;
+import com.eternallove.demo.zuccfairy.modle.ReceivedBean;
 import com.eternallove.demo.zuccfairy.modle.UserBean;
 
 import java.util.ArrayList;
@@ -116,14 +117,48 @@ public class FairyDB {
         return true;
     }
 
-
+    public void saveReceived(ReceivedBean receivedBean){
+        final String sql = "INSERT INTO Received(user_id,timestampe,message,picture) VALUES(?,?,?,?)";
+        db.execSQL(sql, new Object[]{receivedBean.getUser_id(),
+                receivedBean.getTimestampe(), receivedBean.getMessage(),receivedBean.getPicture()});
+    }
+    public ReceivedBean queryReceived(int id){
+        ReceivedBean receivedBean = new ReceivedBean();
+        final String sql = "SELECT user_id,timestampe,message,picture FROM Received WHERE id = ?";
+        Cursor c = db.rawQuery(sql, new String[]{id+""});
+        if (c.moveToFirst()){
+            receivedBean.setId(id);
+            receivedBean.setUser_id(c.getString(0));
+            receivedBean.setTimestampe(c.getLong(1));
+            receivedBean.setMessage(c.getString(2));
+            receivedBean.setPicture(c.getString(3));
+        }
+        c.close();
+        return receivedBean;
+    }
+    public List<ReceivedBean> queryReceivedAll(String User_id){
+        ArrayList<ReceivedBean> list= new ArrayList<ReceivedBean>();
+        ReceivedBean receivedBean;
+        final String sql = "SELECT id,timestampe,message,picture FROM Received WHERE user_id = ?";
+        Cursor c = db.rawQuery(sql, new String[]{User_id});
+        while(c.moveToNext()){
+            receivedBean = new ReceivedBean();
+            receivedBean.setId(c.getInt(0));
+            receivedBean.setUser_id(User_id);
+            receivedBean.setTimestampe(c.getLong(1));
+            receivedBean.setMessage(c.getString(2));
+            receivedBean.setPicture(c.getString(3));
+            list.add(receivedBean);
+        }
+        return list;
+    }
     /**
      * 插入数据
      */
-    public void insertAlarmDate(AlarmBean bean){
-        db.execSQL("insert into alarmlist(title,isAllday,isVibrate,year,month,day,startTimeHour," +
-                "startTimeMinute,endTimeHour,endTimeMinute,alarmTime,alarmColor,alarmTonePath,local," +
-                "description,replay) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",new Object[]{bean.getTitle(),bean.getIsAllday(),
+    public void saveAlarmDate(AlarmBean bean){
+        final String sql = "INSERT INTO AlarmList ( user_id,title,isAllday ,isVibrate ,year ,month ,day ,startTimeHour ,startTimeMinute ,endTimeHour" +
+                " ,endTimeMinute ,alarmTime ,alarmColor ,alarmTonePath ,local ,description,replay) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        db.execSQL(sql,new Object[]{bean.getUser_id(),bean.getTitle(),bean.getIsAllday(),
                 bean.getIsVibrate(),bean.getYear(),bean.getMonth(),bean.getDay(),bean.getStartTimeHour(),bean.getStartTimeMinute(),bean.getEndTimeHour(),
                 bean.getEndTimeMinute(),bean.getAlarmTime(),bean.getAlarmColor(),bean.getAlarmTonePath(),bean.getLocal(),bean.getDescription(),bean.getReplay()});
     }
@@ -203,7 +238,7 @@ public class FairyDB {
      * @return
      */
     public AlarmBean getDataById(int id){
-        Cursor cursor = db.rawQuery("select * from alarmlist where _id=?", new String[]{id + ""});
+        Cursor cursor = db.rawQuery("select * from alarmlist where id=?", new String[]{id + ""});
         cursor.moveToNext();
         AlarmBean bean = new AlarmBean();
         bean.setId(cursor.getInt(0));
@@ -231,7 +266,7 @@ public class FairyDB {
      * 删除指定数据
      */
     public void deleteDataById(int id) {
-        db.delete("alarmlist", "_id=?", new String[]{id+""});
+        db.delete("alarmlist", "id=?", new String[]{id+""});
     }
 
     public void updateDataById(int id,AlarmBean bean){
@@ -252,13 +287,14 @@ public class FairyDB {
         values.put("local",bean.getLocal());
         values.put("description",bean.getDescription());
         values.put("replay",bean.getReplay());
-        db.update("alarmlist",values,"_id=?",new String[]{id+""});
+        db.update("AlarmList",values,"id=?",new String[]{id+""});
     }
 
     public Cursor getCursor() {
         // TODO Auto-generated method stub
         String[] columns = new String[] {
-                "_id",
+                "id",
+                "user_id",
                 "title",
                 "isAllday",
                 "isVibrate",
@@ -276,7 +312,7 @@ public class FairyDB {
                 "description",
                 "replay"
         };
-        return db.query("alarmlist", columns, null, null, null, null,
+        return db.query("AlarmList", columns, null, null, null, null,
                 null);
     }
 }

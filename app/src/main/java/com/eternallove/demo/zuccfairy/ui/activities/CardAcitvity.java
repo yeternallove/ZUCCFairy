@@ -1,5 +1,7 @@
 package com.eternallove.demo.zuccfairy.ui.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -24,6 +26,11 @@ public class CardAcitvity extends AppCompatActivity {
     public int QR_WIDTH;
     public int QR_HEIGHT;
 
+    public static void actionStart(Context context){
+        Intent intent=new Intent();
+        intent.setClass(context,CardAcitvity.class);
+        context.startActivity(intent);
+    }
     //5:00~10:00打卡，在生成card前请先调用该函数判断时间
     public static int checkTime(){
         String datestr[] = DateHelper.dateToString(new Date(System.currentTimeMillis()), "HH:mm").split(":");

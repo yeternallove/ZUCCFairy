@@ -17,6 +17,7 @@ import java.util.Calendar;
 public class AlarmBean implements Serializable {
 
     private int id;
+    private String user_id;
     private String title;
     private int isAllday;//是否是全天
     private int isVibrate;//是否震动
@@ -36,6 +37,14 @@ public class AlarmBean implements Serializable {
 
     public AlarmBean() {
 
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     public int getId() {
@@ -232,6 +241,7 @@ public class AlarmBean implements Serializable {
     public String toString() {
         return "AlarmBean{" +
                 "id=" + id +
+                ", user_id = " + user_id +
                 ", title='" + title + '\'' +
                 ", isAllday=" + isAllday +
                 ", isVibrate=" + isVibrate +

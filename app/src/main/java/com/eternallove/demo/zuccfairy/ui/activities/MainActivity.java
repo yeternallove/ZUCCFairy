@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mPopupWindow.showAsDropDown(mBtnBotDir3,0,-1*(mViews[0].getHeight()+NUM_BOT_DIR_3*mpopupHeight));
                 break;
             case R.id.tv_daily_punch:
-                Toast.makeText(this, "你点击了“”按键！", Toast.LENGTH_SHORT).show();
+                CardAcitvity.actionStart(MainActivity.this);
                 mPopupWindow.dismiss();
                 break;
             case R.id.tv_homepage:
