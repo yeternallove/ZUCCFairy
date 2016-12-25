@@ -5,10 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.eternallove.demo.zuccfairy.util.DateHelper;
 import com.eternallove.demo.zuccfairy.util.QRHelper;
+
 import com.eternallove.demo.zuccfairy.R;
+import com.eternallove.demo.zuccfairy.util.DateHelper;
 import com.eternallove.demo.zuccfairy.util.RoundImageView;
 
 import java.util.Date;
