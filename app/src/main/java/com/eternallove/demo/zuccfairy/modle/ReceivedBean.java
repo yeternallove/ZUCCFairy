@@ -12,7 +12,13 @@ public class ReceivedBean {
     private long timestampe;
     private String message;
     private String picture;
-
+    public ReceivedBean(){}
+    public ReceivedBean(String user_id,long timestampe,String message,String picture){
+       this.user_id = user_id;
+       this.timestampe = timestampe;
+       this.message = message;
+       this.picture = picture;
+    }
     public int getId() {
         return id;
     }

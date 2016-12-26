@@ -22,7 +22,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.eternallove.demo.zuccfairy.R;
-import com.eternallove.demo.zuccfairy.Service.SendAlarmBroadcast;
+import com.eternallove.demo.zuccfairy.service.SendAlarmBroadcast;
 import com.eternallove.demo.zuccfairy.db.FairyDB;
 import com.eternallove.demo.zuccfairy.ui.activities.alarmset.SetAlarmTimeActivity;
 import com.eternallove.demo.zuccfairy.ui.activities.alarmset.SetAlarmToneActivity;
@@ -51,6 +51,7 @@ public class AddScheduleActivity extends AppCompatActivity {
     private AlarmBean alarmBean = new AlarmBean();
     private FairyDB db;
     private int id;
+    private  String mID;
 
     @BindView(R.id.alarm_title)
     EditText alarm_title;
@@ -256,7 +257,7 @@ public class AddScheduleActivity extends AppCompatActivity {
 
         if (id == 0) {
             System.out.println("保存的数据:" + alarmBean.toString());
-            alarmBean.setUser_id(PreferenceManager.getDefaultSharedPreferences(this).getInt("mId",-1)+"");
+            alarmBean.setUser_id(this.mID);
             db.saveAlarmDate(alarmBean);
 
             SendAlarmBroadcast.startAlarmService(this);
@@ -281,9 +282,8 @@ public class AddScheduleActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_schedule);
-
+        this.mID = PreferenceManager.getDefaultSharedPreferences(this).getString("user_id",null);
         ButterKnife.bind(this);
-
         db = CalendarActivity.getFairyDB();
         if (getIntent().getStringExtra("type").equals("DetailToAdd")) {
             Intent intent = getIntent();

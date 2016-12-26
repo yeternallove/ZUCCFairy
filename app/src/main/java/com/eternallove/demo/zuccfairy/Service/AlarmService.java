@@ -1,4 +1,4 @@
-package com.eternallove.demo.zuccfairy.Service;
+package com.eternallove.demo.zuccfairy.service;
 
 import android.app.Service;
 import android.content.Intent;

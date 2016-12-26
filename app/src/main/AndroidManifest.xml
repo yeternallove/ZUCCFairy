@@ -18,44 +18,45 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activities.MainActivity"
-            android:theme="@style/HaveActionBarTheme">
+
+        <activity android:name=".ui.activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.activities.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
-        <activity
-            android:name=".ui.activities.CalendarActivity"></activity>
 
+        <activity
+            android:name=".ui.activities.MainActivity"
+            android:theme="@style/HaveActionBarTheme">
+        </activity>
+
+
+        <activity android:name=".ui.activities.LoginActivity"/>
+        <activity android:name=".ui.activities.CalendarActivity"/>
         <activity android:name=".ui.activities.CardAcitvity" />
-
         <activity android:name=".ui.activities.AddScheduleActivity" />
         <activity android:name=".ui.activities.alarmset.SetAlarmTimeActivity" />
         <activity android:name=".ui.activities.alarmset.SetAlarmToneActivity" />
         <activity android:name=".ui.activities.alarmset.SetColorActivity" />
         <activity android:name=".ui.activities.alarmset.SetLocalActivity" />
         <activity android:name=".ui.activities.alarmset.SetRePlayActivity" />
-
         <activity android:name=".ui.activities.AlarmRemindActivity" />
 
         <service
-            android:name=".Service.AlarmService"
+            android:name=".service.AlarmService"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:process="com.eternallove.demo.zuccFairy.serviceProcess"></service>
+            android:process="com.eternallove.demo.zuccFairy.serviceProcess"/>
 
-        <receiver android:name=".Service.AlarmServiceBroadcastReceiver">
+        <receiver android:name=".service.AlarmServiceBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".Service.AlarmAlertBroadcastReceiver"></receiver>
+        <receiver android:name=".service.AlarmAlertBroadcastReceiver"></receiver>
     </application>
 
 </manifest>

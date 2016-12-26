@@ -1,8 +1,7 @@
 package com.eternallove.demo.zuccfairy.ui.activities;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 
@@ -60,8 +59,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private static final int REQUEST_READ_CONTACTS = 0;
 
-    private UserBean user = null;
-
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -70,12 +67,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private SharedPreferences.Editor editor;
     private FairyDB fairyDB;
     private boolean isRemember;
+
+    private ProgressDialog pDialog;
     // UI references.
     @BindView(R.id.autoText_login_username) AutoCompleteTextView mEmailView;
     @BindView(R.id.edt_login_password)      EditText mPasswordView;
     @BindView(R.id.chk_login_remember_pass) CheckBox rememberpass;
     @BindView(R.id.scv_login_form)          View mLoginFormView;
-    @BindView(R.id.login_progress)          View mProgressView;
     @BindView(R.id.btn_login_in)            Button mEmailSignInButton;
 
     public static void actionStart(Context context){
@@ -225,10 +223,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-
-            showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
         }
@@ -252,43 +246,43 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Shows the progress UI and hides the login form.
      * 显示进度隐藏登录表单
      */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if(show){
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            // 隐藏软键盘
-            imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
+//    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+//    private void showProgress(final boolean show) {
+//        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+//        // for very easy animations. If available, use these APIs to fade-in
+//        // the progress spinner.
+//        if(show){
+//            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//            // 隐藏软键盘
+//            imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+//        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+//            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+//
+//            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+//            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
+//                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+//                @Override
+//                public void onAnimationEnd(Animator animation) {
+//                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+//                }
+//            });
+//
+//            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+//            mProgressView.animate().setDuration(shortAnimTime).alpha(
+//                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+//                @Override
+//                public void onAnimationEnd(Animator animation) {
+//                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+//                }
+//            });
+//        } else {
+//            // The ViewPropertyAnimator APIs are not available, so simply show
+//            // and hide the relevant UI components.
+//            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+//            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+//        }
+//    }
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
@@ -357,42 +351,53 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAccount = userID;
             mPassword = password;
         }
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
+            pDialog = new ProgressDialog(LoginActivity.this);
+            pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(true);
+            pDialog.show();
 
+        }
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-            user = new UserBean(0+"","a","a","测试者一号",R.drawable.ic_avatar_0+"",null);
-            fairyDB.saveUser(user);
+            fairyDB.saveUser(new UserBean(0+"","a","a","测试者一号",R.drawable.ic_avatar_0+"",null));
             try {
-                boolean success = fairyDB.login(mAccount,mPassword);
-                if(success){//貌似写这里也不妥
-                    editor.putBoolean("remember_Password", true);
-                    editor.putString("mAccount", user.getAccount());
-                    editor.putString("mPassword", user.getPwd());
-                    editor.putString("mName", user.getName());
-                    editor.putString("mAvatar", user.getAvatar());
-                    editor.putInt("mId", 0);
-                }
-                else {
-                    editor.clear();
-                }
-                editor.commit();
+                String user_id = fairyDB.login(mAccount,mPassword);
                 // Simulate network access.
                 Thread.sleep(3000);
-                return success;
+                if(user_id == null)
+                    return false;
+                else {
+                    editor.putString("user_id",user_id);
+                    editor.commit();
+                }
             } catch (InterruptedException e) {
                 return false;
             }
 
             // TODO: register the new account here.
-
+            return true;
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
-            showProgress(false);
+            if (pDialog.isShowing())
+                pDialog.dismiss();
             if (success) {
+                if(rememberpass.isChecked()){
+                    editor.putBoolean("remember_Password", true);
+                    editor.putBoolean("Login", true);
+                }
+                else {
+                    editor.clear();
+                }
+                editor.commit();
+                MainActivity.actionStart(LoginActivity.this);
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
@@ -403,7 +408,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected void onCancelled() {
             mAuthTask = null;
-            showProgress(false);
+            if (pDialog.isShowing())
+                pDialog.dismiss();
         }
     }
 }

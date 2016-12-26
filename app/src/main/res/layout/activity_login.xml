@@ -82,13 +82,4 @@
 
         </LinearLayout>
     </ScrollView>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/ic_login_wait"
-        android:id="@+id/login_progress"
-        android:visibility="gone"/>
-
 </LinearLayout>

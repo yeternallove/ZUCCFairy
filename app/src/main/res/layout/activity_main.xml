@@ -20,7 +20,7 @@
         android:id="@+id/ll_bot_in"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bg_other"
+        android:background="@color/background"
         android:layout_alignParentBottom="true"
         android:translationY="@dimen/activity_select_height">
         <View
@@ -50,6 +50,12 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:imeOptions="actionSend"
+                android:inputType="text"
+                android:background="@drawable/ic_bg_edt_send"
+                android:textSize="15sp"
+                android:layout_margin="@dimen/margin_chat_activity"
                 android:id="@+id/edt_bot_send" />
             <Button
                 android:layout_width="wrap_content"
@@ -67,7 +73,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/ll_bot_dir"
         android:layout_alignParentBottom="true"
-        android:background="@color/bg_other">
+        android:background="@color/background">
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

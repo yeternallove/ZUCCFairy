@@ -44,7 +44,7 @@
             android:textColor="#ff000000"
             android:textSize="15sp" />
         <TextView
-            android:id="@+id/tv_userid"
+            android:id="@+id/tv_userName"
             style="@style/chat_text_name_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

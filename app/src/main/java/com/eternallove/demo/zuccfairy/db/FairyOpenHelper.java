@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class FairyOpenHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_USER = "create table User("
-            + "user_id text primary key,"
+            + "user_id char(20) primary key,"
             + "account char(20),"
             + "pwd char(20),"
             + "name char(20),"

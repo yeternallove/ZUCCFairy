@@ -21,9 +21,9 @@
             android:id="@+id/img_userhead"
             android:layout_width="@dimen/size_avatar"
             android:layout_height="@dimen/size_avatar"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="@dimen/margin_chat_activity"
+            android:layout_marginRight="@dimen/margin_chat_activity"
             android:src="@drawable/ic_useravatar"
             android:scaleType="fitXY" />
 
@@ -31,12 +31,12 @@
             android:id="@+id/row_recv_pic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_chat_activity"
-            android:layout_toRightOf="@id/img_userhead"
+            android:layout_marginRight="@dimen/margin_chat_activity"
+            android:layout_toLeftOf="@id/img_userhead"
              >
 
             <ImageView
-                android:background="@drawable/select_chatfrom_other_bg"
+                android:background="@drawable/select_chatfrom_me_bg"
                 android:id="@+id/iv_sendPicture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -67,13 +67,13 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/tv_userid"
+            android:id="@+id/tv_userName"
             style="@style/chat_text_name_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:layout_below="@id/img_userhead"
-            android:layout_toLeftOf="@id/row_recv_pic" />
+            android:layout_toRightOf="@id/row_recv_pic" />
     </RelativeLayout>
 
 </LinearLayout>

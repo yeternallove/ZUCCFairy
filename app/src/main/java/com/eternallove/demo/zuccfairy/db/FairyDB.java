@@ -61,18 +61,19 @@ public class FairyDB {
      * @param pwd
      * @return
      */
-    public boolean login(String account,String pwd){
-        final String sql = "SELECT pwd FROM User WHERE account = ? ";
+    public String login(String account,String pwd){
+        final String sql = "SELECT user_id,pwd FROM User WHERE account = ? ";
         Cursor c = db.rawQuery(sql, new String[]{account});
         if (c.moveToFirst()){
-            String pwd2 = c.getString(0);
+            String user_id = c.getString(0);
+            String pwd2 = c.getString(1);
             if(pwd.equals(pwd2)){
-                return true;
+                return user_id;
             }else {
-                return false;
+                return null;
             }
         }else {
-            return false;
+            return null;
         }
     }
 
@@ -118,6 +119,8 @@ public class FairyDB {
     }
 
     public void saveReceived(ReceivedBean receivedBean){
+        if(receivedBean.getUser_id() == null)
+            return;
         final String sql = "INSERT INTO Received(user_id,timestampe,message,picture) VALUES(?,?,?,?)";
         db.execSQL(sql, new Object[]{receivedBean.getUser_id(),
                 receivedBean.getTimestampe(), receivedBean.getMessage(),receivedBean.getPicture()});
@@ -136,10 +139,10 @@ public class FairyDB {
         c.close();
         return receivedBean;
     }
-    public List<ReceivedBean> queryReceivedAll(String User_id){
-        ArrayList<ReceivedBean> list= new ArrayList<ReceivedBean>();
+    public List<ReceivedBean> loadReceivedAll(String User_id){
+        List<ReceivedBean> list= new ArrayList<>();
         ReceivedBean receivedBean;
-        final String sql = "SELECT id,timestampe,message,picture FROM Received WHERE user_id = ?";
+        final String sql = "SELECT id,timestampe,message,picture FROM Received WHERE user_id = ? ORDER BY timestampe DESC";
         Cursor c = db.rawQuery(sql, new String[]{User_id});
         while(c.moveToNext()){
             receivedBean = new ReceivedBean();
