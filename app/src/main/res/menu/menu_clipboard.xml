@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_clip_copy"
+        android:title="@string/clipboard_copy"/>
+    <item
+        android:id="@+id/action_clip_delete"
+        android:title="@string/clipboard_delete"/>
+</menu>

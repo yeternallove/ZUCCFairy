@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <!-- bottom shadow -->
+    <!-- bottom shape_shadow -->
     <item>
         <shape android:shape="rectangle" >
             <!-- from top to bottom -->

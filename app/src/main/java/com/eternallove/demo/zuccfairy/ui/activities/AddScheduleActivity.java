@@ -30,6 +30,7 @@ import com.eternallove.demo.zuccfairy.ui.activities.alarmset.SetColorActivity;
 import com.eternallove.demo.zuccfairy.ui.activities.alarmset.SetLocalActivity;
 import com.eternallove.demo.zuccfairy.ui.activities.alarmset.SetRePlayActivity;
 import com.eternallove.demo.zuccfairy.modle.AlarmBean;
+import com.eternallove.demo.zuccfairy.ui.adapters.ChatAdapter;
 import com.eternallove.demo.zuccfairy.util.ColorUtils;
 
 import java.text.SimpleDateFormat;
@@ -100,7 +101,7 @@ public class AddScheduleActivity extends AppCompatActivity {
 
     @OnClick(R.id.left_clear)
     void clear() {
-        startActivity(new Intent(this, MainActivity.class));
+        CalendarActivity.actionStart(this);
         finish();
     }
 
@@ -262,7 +263,7 @@ public class AddScheduleActivity extends AppCompatActivity {
             SendAlarmBroadcast.startAlarmService(this);
 
             Toast.makeText(this, "添加成功！", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, MainActivity.class));
+            CalendarActivity.actionStart(this);
             finish();
         } else {
             System.out.println("更新的数据:" + alarmBean.toString());
@@ -271,7 +272,7 @@ public class AddScheduleActivity extends AppCompatActivity {
             SendAlarmBroadcast.startAlarmService(this);
 
             Toast.makeText(this, "更新成功！", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, CalendarActivity.class));
+            CalendarActivity.actionStart(this);
             finish();
         }
 
@@ -281,12 +282,10 @@ public class AddScheduleActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_schedule);
-
+        ButterKnife.bind(this);
         this.mID = PreferenceManager.getDefaultSharedPreferences(this).getString("user_id", null);
 
-        ButterKnife.bind(this);
-
-        db = new FairyDB(getApplicationContext());
+        db = FairyDB.getInstance(this);
         if (getIntent().getStringExtra("type").equals("DetailToAdd")) {
             Intent intent = getIntent();
             AlarmBean bean = (AlarmBean) intent.getSerializableExtra("AlarmBean");
@@ -441,7 +440,7 @@ public class AddScheduleActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, MainActivity.class));
+        CalendarActivity.actionStart(this);
         finish();
     }
 }

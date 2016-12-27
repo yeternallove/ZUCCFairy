@@ -23,7 +23,7 @@ import static android.os.SystemClock.sleep;
  */
 public class SplashActivity extends AppCompatActivity {
 
-    //    @BindView(R.id.version_code)
+//    @BindView(R.id.version_code)
 //    TextView tvVersionCode;
     //TODO wait update
     private String mVersionName;//版本名
@@ -36,20 +36,20 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
-        boolean Login = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("Login", false);
-        if (Login) {
-            //3S的延迟
-            Timer timer = new Timer();
-            TimerTask task = new TimerTask() {
+        boolean Login = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("Login",false);
+        if(Login){
+            //1.5S的延迟
+            Timer timer =new Timer();
+            TimerTask task =new TimerTask() {
                 @Override
                 public void run() {
                     MainActivity.actionStart(SplashActivity.this);
                     finish();
                 }
             };
-            timer.schedule(task, 3000);
+            timer.schedule(task,1500);
 
-        } else {
+        }else {
             LoginActivity.actionStart(this);
             finish();
         }

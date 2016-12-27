@@ -36,8 +36,7 @@
         <activity android:name=".ui.activities.LoginActivity" />
         <activity
             android:name=".ui.activities.CalendarActivity"
-            android:launchMode="singleTask"
-            android:theme="@style/NoActionBarTheme"></activity>
+            android:launchMode="singleTask"></activity>
 
         <activity android:name=".ui.activities.CardAcitvity" />
 

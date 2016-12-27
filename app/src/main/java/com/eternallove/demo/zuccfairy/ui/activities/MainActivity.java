@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final int NUM_BOT_DIR_1 = 1;//子目录中item的个数
     private static final int NUM_BOT_DIR_3 = 1;
 
-    public static String User_id;
+    private String User_id;
     private InputMethodManager imm;
     private View[] mViews = new View[2];
     private int mCurrent;
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param view
      */
     public void shift(View view) {
-
+        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),0);
         mViews[mCurrent].animate().translationY(mViews[mCurrent].getHeight())
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             View v = getCurrentFocus();
-            if (isShouldHideInput(v, ev)) {
+            if (isShouldHideInput(ev)) {
                 if (imm != null) {
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
@@ -194,7 +194,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return false;
     }
-
+    public boolean isShouldHideInput(MotionEvent event){
+        int[] leftTop = { 0, 0 };
+        mEditText.getLocationInWindow(leftTop);
+        int left = leftTop[0];
+        int top = leftTop[1];
+        if( event.getY() < top ){
+            return true;
+        }
+        return false;
+    }
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

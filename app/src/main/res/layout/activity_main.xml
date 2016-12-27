@@ -51,11 +51,11 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
-                android:imeOptions="actionSend"
-                android:inputType="text"
-                android:background="@drawable/ic_bg_edt_send"
+                android:background="@drawable/shape_corner"
                 android:textSize="15sp"
                 android:layout_margin="@dimen/margin_chat_activity"
+                android:paddingStart="@dimen/padding_chat_activity"
+                android:paddingEnd="@dimen/padding_chat_activity"
                 android:id="@+id/edt_bot_send" />
             <Button
                 android:layout_width="wrap_content"

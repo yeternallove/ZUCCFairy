@@ -24,6 +24,7 @@ public class AlarmService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        this.db = FairyDB.getInstance(this);
     }
 
     @Nullable
@@ -37,9 +38,6 @@ public class AlarmService extends Service {
      * @return
      */
     private AlarmBean getNext() {
-
-//        db = CalendarActivity.getFairyDB();
-        db = new FairyDB(getApplicationContext());
         List<AlarmBean> all = db.getAll();
         if (all.size() == 0) {
             return null;
