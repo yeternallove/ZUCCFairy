@@ -36,17 +36,12 @@ import butterknife.ButterKnife;
  */
 
 public class CalendarActivity extends AppCompatActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
-    private static FairyDB db;
     @BindView(R.id.activity_main_rfal)
     RapidFloatingActionLayout rfaLayout;
     @BindView(R.id.activity_main_rfab)
     RapidFloatingActionButton rfaBtn;
 
     RapidFloatingActionHelper rfabHelper;
-
-    public static FairyDB getFairyDB() {
-        return db;
-    }
 
     public static void actionStart(Context context){
         Intent intent=new Intent();
@@ -62,7 +57,6 @@ public class CalendarActivity extends AppCompatActivity implements RapidFloating
         setContentView(R.layout.activity_calendar);
 
         ButterKnife.bind(this);
-        db = FairyDB.getInstance(this);
         initFab();
 
         //弹窗权限验证

@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final int NUM_BOT_DIR_1=1;//子目录中item的个数
     private static final int NUM_BOT_DIR_3=1;
 
-    private String User_id;
+    public static String User_id;
     private InputMethodManager imm;
     private View[] mViews = new View[2];
     private int mCurrent;

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.eternallove.demo.zuccfairy.modle.AlarmBean;
 import com.eternallove.demo.zuccfairy.modle.ReceivedBean;
 import com.eternallove.demo.zuccfairy.modle.UserBean;
+import com.eternallove.demo.zuccfairy.ui.activities.MainActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,13 +25,23 @@ public class FairyDB {
 
     private static FairyDB mfairyDB;
     private SQLiteDatabase db;
+    private FairyOpenHelper fop;
     private Context mcontext;
+    private FairyDB instance = null;
 
-    private FairyDB(Context context){
-        FairyOpenHelper dbHelper = new FairyOpenHelper(context,DB_NAME,null,VERSION);
-        db = dbHelper.getWritableDatabase();
+    public FairyDB(Context context){
         this.mcontext = context;
+        fop = new FairyOpenHelper(context,DB_NAME,null,VERSION);
+        db = fop.getWritableDatabase();
     }
+
+    public  void deactivate() {
+        if (null != db && db.isOpen()) {
+            db.close();
+        }
+        db = null;
+    }
+
     public synchronized static FairyDB getInstance(Context context){
         if(mfairyDB == null){
             mfairyDB = new FairyDB(context);
@@ -161,7 +172,7 @@ public class FairyDB {
     public void saveAlarmDate(AlarmBean bean){
         final String sql = "INSERT INTO AlarmList ( user_id,title,isAllday ,isVibrate ,year ,month ,day ,startTimeHour ,startTimeMinute ,endTimeHour" +
                 " ,endTimeMinute ,alarmTime ,alarmColor ,alarmTonePath ,local ,description,replay) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        db.execSQL(sql,new Object[]{bean.getUser_id(),bean.getTitle(),bean.getIsAllday(),
+        db.execSQL(sql,new Object[]{MainActivity.User_id,bean.getTitle(),bean.getIsAllday(),
                 bean.getIsVibrate(),bean.getYear(),bean.getMonth(),bean.getDay(),bean.getStartTimeHour(),bean.getStartTimeMinute(),bean.getEndTimeHour(),
                 bean.getEndTimeMinute(),bean.getAlarmTime(),bean.getAlarmColor(),bean.getAlarmTonePath(),bean.getLocal(),bean.getDescription(),bean.getReplay()});
     }
@@ -290,6 +301,7 @@ public class FairyDB {
         values.put("local",bean.getLocal());
         values.put("description",bean.getDescription());
         values.put("replay",bean.getReplay());
+        values.put("user_id",bean.getUser_id());
         db.update("AlarmList",values,"id=?",new String[]{id+""});
     }
 
@@ -297,7 +309,6 @@ public class FairyDB {
         // TODO Auto-generated method stub
         String[] columns = new String[] {
                 "id",
-                "user_id",
                 "title",
                 "isAllday",
                 "isVibrate",
@@ -313,7 +324,8 @@ public class FairyDB {
                 "alarmTonePath",
                 "local",
                 "description",
-                "replay"
+                "replay",
+                "user_id"
         };
         return db.query("AlarmList", columns, null, null, null, null,
                 null);

@@ -259,7 +259,6 @@ public class AddScheduleActivity extends AppCompatActivity {
             System.out.println("保存的数据:" + alarmBean.toString());
             alarmBean.setUser_id(this.mID);
             db.saveAlarmDate(alarmBean);
-
             SendAlarmBroadcast.startAlarmService(this);
 
             Toast.makeText(this, "添加成功！", Toast.LENGTH_SHORT).show();
@@ -272,7 +271,7 @@ public class AddScheduleActivity extends AppCompatActivity {
             SendAlarmBroadcast.startAlarmService(this);
 
             Toast.makeText(this, "更新成功！", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, CalendarActivity.class));
             finish();
         }
 
@@ -282,9 +281,12 @@ public class AddScheduleActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_schedule);
+
         this.mID = PreferenceManager.getDefaultSharedPreferences(this).getString("user_id",null);
+
         ButterKnife.bind(this);
-        db = CalendarActivity.getFairyDB();
+
+        db = new FairyDB(getApplicationContext());
         if (getIntent().getStringExtra("type").equals("DetailToAdd")) {
             Intent intent = getIntent();
             AlarmBean bean = (AlarmBean) intent.getSerializableExtra("AlarmBean");

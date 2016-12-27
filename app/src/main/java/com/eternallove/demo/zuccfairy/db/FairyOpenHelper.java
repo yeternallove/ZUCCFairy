@@ -20,7 +20,7 @@ public class FairyOpenHelper extends SQLiteOpenHelper {
             + "data text)";
 
     public static  final String CREATE_ALARM = "create table AlarmList(id integer primary key autoincrement,"
-            + "user_id char(20),"
+            + "replay char(20),"
             + "title char(20),"
             + "isAllday int(20),"
             + "isVibrate int(20),"
@@ -36,7 +36,7 @@ public class FairyOpenHelper extends SQLiteOpenHelper {
             + "alarmTonePath char(20),"
             + "local char(20),"
             + "description char(100),"
-            + "replay char(20))";
+            + "user_id char(20))";
 
     public static final String CREATE_RECEIVED = "create table Received(id integer primary key autoincrement," +
             "user_id char(20)," +

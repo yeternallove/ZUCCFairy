@@ -70,7 +70,7 @@ public class AlarmAlertBroadcastReceiver extends BroadcastReceiver {
      * 播放音乐
      * @param context
      */
-    private void playMusicAndVibrate(Context context, AlarmBean bean){
+    private void playMusicAndVibrate(Context context,AlarmBean bean){
         Uri ringtoneUri = Uri.parse(bean.getAlarmTonePath());
         if (mediaPlayer == null) {
             mediaPlayer = new MediaPlayer();

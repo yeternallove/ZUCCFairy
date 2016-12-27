@@ -38,7 +38,8 @@ public class AlarmService extends Service {
      */
     private AlarmBean getNext() {
 
-        db = CalendarActivity.getFairyDB();
+//        db = CalendarActivity.getFairyDB();
+        db = new FairyDB(getApplicationContext());
         List<AlarmBean> all = db.getAll();
         if (all.size() == 0) {
             return null;
