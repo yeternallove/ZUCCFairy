@@ -3,6 +3,7 @@ package com.eternallove.demo.zuccfairy.util;
 /**
  * Created by angelzouxin on 2016/12/21.
  */
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -69,10 +70,9 @@ public class RoundImageView extends ImageView {
     }
 
     /**
-     *
+     * @param radius
      * @MaskType.ROUNDRECTANGLE
      * @MaskType.ROUNDRECTANGLETOP
-     * @param radius
      */
     public void setRadius(int radius) {
         if (mRadius == radius) {
@@ -179,7 +179,7 @@ public class RoundImageView extends ImageView {
                 canvas.drawCircle(width / 2, height / 2, r - mBorderWidth / 2, mBorderPaint);
                 break;
             case ROUNDRECTANGLE:
-                canvas.drawRoundRect(new RectF(0, 0, width, height), mRadius, mRadius,mBorderPaint);
+                canvas.drawRoundRect(new RectF(0, 0, width, height), mRadius, mRadius, mBorderPaint);
                 break;
         }
 
@@ -200,7 +200,7 @@ public class RoundImageView extends ImageView {
          */
         CIRCLE(1),
         /**
-         *a parallelogram with four circle angles
+         * a parallelogram with four circle angles
          */
         ROUNDRECTANGLE(2),
 

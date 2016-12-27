@@ -27,16 +27,20 @@ import butterknife.OnClick;
  */
 public class SetAlarmToneActivity extends AppCompatActivity {
 
-    @OnClick(R.id.left_alarm_tone_back) void finishClose(){
+    @OnClick(R.id.left_alarm_tone_back)
+    void finishClose() {
         finish();
     }
-    @OnClick(R.id.tv_save) void saveTone(){
-        Intent intent=new Intent();
+
+    @OnClick(R.id.tv_save)
+    void saveTone() {
+        Intent intent = new Intent();
         intent.putExtra("tone", toneName);
-        intent.putExtra("tonePath",tonePath);
+        intent.putExtra("tonePath", tonePath);
         setResult(4, intent);
         finish();
     }
+
     @BindView(R.id.tone_recycler)
     RecyclerView tone_recycler;
     private String toneName;
@@ -88,7 +92,7 @@ public class SetAlarmToneActivity extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
-        if(mediaPlayer!=null){
+        if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.release();
             mediaPlayer = null;

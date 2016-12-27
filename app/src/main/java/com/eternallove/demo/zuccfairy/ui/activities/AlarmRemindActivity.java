@@ -18,8 +18,8 @@ public class AlarmRemindActivity extends AppCompatActivity {
 
         Bundle bundle = this.getIntent().getExtras();
         AlarmBean alarmBean = (AlarmBean) bundle.getSerializable("alarm");
-
-        Toast.makeText(this,"闹钟响了！"+alarmBean.getTitle(), Toast.LENGTH_SHORT).show();
+        System.out.println(alarmBean.getTitle());
+        Toast.makeText(this, "闹钟响了！" + alarmBean.getTitle(), Toast.LENGTH_SHORT).show();
     }
 
 }

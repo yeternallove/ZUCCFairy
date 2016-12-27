@@ -18,9 +18,10 @@ import butterknife.OnClick;
  */
 public class SetRePlayActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private CheckBox no_replay,everyDay_replay,everyWeek_replay,everyMonth_replay,everyYear_replay;
+    private CheckBox no_replay, everyDay_replay, everyWeek_replay, everyMonth_replay, everyYear_replay;
 
-    @OnClick(R.id.left_back) void finishClose(){
+    @OnClick(R.id.left_back)
+    void finishClose() {
         finish();
     }
 
@@ -50,8 +51,8 @@ public class SetRePlayActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
 
-        Intent intent=new Intent();
-        switch (v.getId()){
+        Intent intent = new Intent();
+        switch (v.getId()) {
             case R.id.no_replay:
                 no_replay.setChecked(true);
                 everyWeek_replay.setChecked(false);

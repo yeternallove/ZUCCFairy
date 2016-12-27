@@ -18,9 +18,10 @@ import butterknife.OnClick;
  */
 public class SetAlarmTimeActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private CheckBox no_remind,min10_remind,hour1_remind,day1_remind;
+    private CheckBox no_remind, min10_remind, hour1_remind, day1_remind;
 
-    @OnClick(R.id.left_alarm_back) void finishClose(){
+    @OnClick(R.id.left_alarm_back)
+    void finishClose() {
         finish();
     }
 
@@ -44,8 +45,8 @@ public class SetAlarmTimeActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        Intent intent=new Intent();
-        switch (v.getId()){
+        Intent intent = new Intent();
+        switch (v.getId()) {
             case R.id.no_remind:
                 no_remind.setChecked(true);
                 min10_remind.setChecked(false);

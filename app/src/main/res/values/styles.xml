@@ -10,6 +10,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--null-->
+    <style name="NoActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar"></style>
+
 
     <!-- Calendar styles -->
     <style name="CalendarCellText">

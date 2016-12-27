@@ -36,7 +36,6 @@ import butterknife.ButterKnife;
  */
 
 public class CalendarActivity extends AppCompatActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
-    private static FairyDB db;
     @BindView(R.id.activity_main_rfal)
     RapidFloatingActionLayout rfaLayout;
     @BindView(R.id.activity_main_rfab)
@@ -44,13 +43,9 @@ public class CalendarActivity extends AppCompatActivity implements RapidFloating
 
     RapidFloatingActionHelper rfabHelper;
 
-    public static FairyDB getFairyDB() {
-        return db;
-    }
-
-    public static void actionStart(Context context){
-        Intent intent=new Intent();
-        intent.setClass(context,CalendarActivity.class);
+    public static void actionStart(Context context) {
+        Intent intent = new Intent();
+        intent.setClass(context, CalendarActivity.class);
         context.startActivity(intent);
     }
 
@@ -62,23 +57,23 @@ public class CalendarActivity extends AppCompatActivity implements RapidFloating
         setContentView(R.layout.activity_calendar);
 
         ButterKnife.bind(this);
-        db = FairyDB.getInstance(this);
         initFab();
 
         //弹窗权限验证
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            isAllowAlert = PrefUtils.getBoolean(this,"isAllowAlert",false);
+            isAllowAlert = PrefUtils.getBoolean(this, "isAllowAlert", false);
             Log.d("isAllowAlert:" + isAllowAlert, "Calendar");
-            if(!isAllowAlert){
+            if (!isAllowAlert) {
                 showPermissionDialog();
             }
-        }else {
+        } else {
             SendAlarmBroadcast.startAlarmService(this);
         }
     }
 
     //权限申请相关方法
     private static final int REQUEST_CODE = 1;
+
     @TargetApi(Build.VERSION_CODES.M)
     private void requestAlertWindowPermission() {
         Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
@@ -89,7 +84,7 @@ public class CalendarActivity extends AppCompatActivity implements RapidFloating
     /**
      * 权限申请弹窗
      */
-    private void showPermissionDialog(){
+    private void showPermissionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(CalendarActivity.this);
         builder.setTitle("弹窗需要开启权限哦~")
                 .setPositiveButton("开启", (dialog, which) -> {
@@ -138,7 +133,7 @@ public class CalendarActivity extends AppCompatActivity implements RapidFloating
     public void onRFACItemIconClick(int i, RFACLabelItem rfacLabelItem) {
         if (i == 0) {
             Intent intent = new Intent(CalendarActivity.this, AddScheduleActivity.class);
-            intent.putExtra("type","mainToAdd");
+            intent.putExtra("type", "mainToAdd");
             startActivity(intent);
             finish();
         }

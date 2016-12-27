@@ -7,7 +7,7 @@ import com.eternallove.demo.zuccfairy.R;
  */
 
 public class ColorUtils {
-    public static int getColorFromStr(String s){
+    public static int getColorFromStr(String s) {
         int colorId = 0;
         switch (s) {
             case "默认颜色":

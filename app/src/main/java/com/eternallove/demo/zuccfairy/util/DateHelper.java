@@ -82,7 +82,7 @@ public class DateHelper {
     }
 
     public static String dateToString(Date date, String format) {
-        SimpleDateFormat formatter = new SimpleDateFormat (format);
+        SimpleDateFormat formatter = new SimpleDateFormat(format);
         return formatter.format(date);
     }
 }

@@ -38,11 +38,11 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    private static final int NUM_BOT_DIR_1=1;//子目录中item的个数
-    private static final int NUM_BOT_DIR_3=1;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final int NUM_BOT_DIR_1 = 1;//子目录中item的个数
+    private static final int NUM_BOT_DIR_3 = 1;
 
-    private String User_id;
+    public static String User_id;
     private InputMethodManager imm;
     private View[] mViews = new View[2];
     private int mCurrent;
@@ -58,16 +58,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private List<ReceivedBean> mPastList;
     private List<ReceivedBean> mNewList;
 
-    @BindView(R.id.swipeRefreshLayout)    SwipeRefreshLayout mSwipeRefreshLayout;
-    @BindView(R.id.recyclerView)          RecyclerView       mRecyclerView;
-    @BindView(R.id.edt_bot_send)          EditText           mEditText;
-    @BindView(R.id.btn_bot_send)          Button             mBtnSend;
-    @BindView(R.id.bot_dir_1)             Button             mBtnBotDir1;
-    @BindView(R.id.bot_dir_2)             Button             mBtnBotDir2;
-    @BindView(R.id.bot_dir_3)             Button             mBtnBotDir3;
-    public static void actionStart(Context context){
-        Intent intent=new Intent();
-        intent.setClass(context,MainActivity.class);
+    @BindView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.recyclerView)
+    RecyclerView mRecyclerView;
+    @BindView(R.id.edt_bot_send)
+    EditText mEditText;
+    @BindView(R.id.btn_bot_send)
+    Button mBtnSend;
+    @BindView(R.id.bot_dir_1)
+    Button mBtnBotDir1;
+    @BindView(R.id.bot_dir_2)
+    Button mBtnBotDir2;
+    @BindView(R.id.bot_dir_3)
+    Button mBtnBotDir3;
+
+    public static void actionStart(Context context) {
+        Intent intent = new Intent();
+        intent.setClass(context, MainActivity.class);
         context.startActivity(intent);
     }
 
@@ -79,16 +87,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mViews[0] = findViewById(R.id.ll_bot_dir);
         mViews[1] = findViewById(R.id.ll_bot_in);
         mCurrent = 0;
-        mPopupHeight = (int ) this.getResources().getDimension(R.dimen.height_popupWindow);
+        mPopupHeight = (int) this.getResources().getDimension(R.dimen.height_popupWindow);
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        mPopupView1 = getLayoutInflater().inflate(R.layout.popup_window_dir_1,null);
-        mPopupView3 = getLayoutInflater().inflate(R.layout.popup_window_dir_3,null);
+        mPopupView1 = getLayoutInflater().inflate(R.layout.popup_window_dir_1, null);
+        mPopupView3 = getLayoutInflater().inflate(R.layout.popup_window_dir_3, null);
 
         mtvDailyPunch = (TextView) mPopupView1.findViewById(R.id.tv_daily_punch);
         mtvHomepage = (TextView) mPopupView3.findViewById(R.id.tv_homepage);
 
-        mPopupWindow = new PopupWindow(mPopupView1,WRAP_CONTENT, WRAP_CONTENT, true);
+        mPopupWindow = new PopupWindow(mPopupView1, WRAP_CONTENT, WRAP_CONTENT, true);
         mPopupWindow.setTouchable(true);
         mPopupWindow.setOutsideTouchable(true);
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(), (Bitmap) null));
@@ -102,26 +110,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
                         .getDisplayMetrics()));
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new GetReceived().execute((Void)null);
+                new GetReceived().execute((Void) null);
             }
         });
         this.fairyDB = FairyDB.getInstance(this);
-        User_id = PreferenceManager.getDefaultSharedPreferences(this).getString("user_id",null);
+        User_id = PreferenceManager.getDefaultSharedPreferences(this).getString("user_id", null);
         mPastList = fairyDB.loadReceivedAll(User_id);
         mNewList = new ArrayList<>();
-        adapter = new ChatAdapter(MainActivity.this, mPastList,mNewList);
+        adapter = new ChatAdapter(MainActivity.this, mPastList, mNewList);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(
                 new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, true));
         mRecyclerView.setHasFixedSize(true);
-        new GetReceived().execute((Void)null);
+        new GetReceived().execute((Void) null);
     }
 
     /**
      * 如其名
+     *
      * @param view
      */
     public void shift(View view) {
@@ -142,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }).start();
     }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
@@ -162,13 +172,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * 如果点击的还是输入框就返回FALSE
+     *
      * @param v
      * @param event
      * @return
      */
-    public  boolean isShouldHideInput(View v, MotionEvent event) {
+    public boolean isShouldHideInput(View v, MotionEvent event) {
         if (v != null && (v instanceof EditText)) {
-            int[] leftTop = { 0, 0 };
+            int[] leftTop = {0, 0};
             v.getLocationInWindow(leftTop);
             int left = leftTop[0];
             int top = leftTop[1];
@@ -186,17 +197,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.bot_dir_1:
                 mPopupWindow.setContentView(mPopupView1);
-                mPopupWindow.showAsDropDown(mBtnBotDir1,0,-1*(mViews[0].getHeight()+NUM_BOT_DIR_1* mPopupHeight));
+                mPopupWindow.showAsDropDown(mBtnBotDir1, 0, -1 * (mViews[0].getHeight() + NUM_BOT_DIR_1 * mPopupHeight));
                 break;
             case R.id.bot_dir_2:
                 CalendarActivity.actionStart(this);
                 break;
             case R.id.bot_dir_3:
                 mPopupWindow.setContentView(mPopupView3);
-                mPopupWindow.showAsDropDown(mBtnBotDir3,0,-1*(mViews[0].getHeight()+NUM_BOT_DIR_3* mPopupHeight));
+                mPopupWindow.showAsDropDown(mBtnBotDir3, 0, -1 * (mViews[0].getHeight() + NUM_BOT_DIR_3 * mPopupHeight));
                 break;
             case R.id.tv_daily_punch:
                 CardAcitvity.actionStart(MainActivity.this);
@@ -208,15 +219,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_bot_send:
                 String msg = mEditText.getText().toString();
-                if(msg == null ||"".equals(msg))
+                if (msg == null || "".equals(msg))
                     break;
-                receivedBean = new ReceivedBean(User_id,System.currentTimeMillis(),msg,null);
+                receivedBean = new ReceivedBean(User_id, System.currentTimeMillis(), msg, null);
                 mNewList.add(receivedBean);
                 adapter.notifyDataSetChanged();
                 fairyDB.saveReceived(receivedBean);
                 mEditText.setText("");
                 break;
-            default:break;
+            default:
+                break;
         }
     }
 
