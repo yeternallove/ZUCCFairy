@@ -19,7 +19,7 @@ public class FairyOpenHelper extends SQLiteOpenHelper {
             + "avatar text,"
             + "data text)";
 
-    public static  final String CREATE_ALARM = "create table AlarmList(id integer primary key autoincrement,"
+    public static final String CREATE_ALARM = "create table AlarmList(id integer primary key autoincrement,"
             + "replay char(20),"
             + "title char(20),"
             + "isAllday int(20),"
@@ -43,6 +43,7 @@ public class FairyOpenHelper extends SQLiteOpenHelper {
             "timestampe long ," +
             "message text ," +
             "picture text )";
+
     public FairyOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }

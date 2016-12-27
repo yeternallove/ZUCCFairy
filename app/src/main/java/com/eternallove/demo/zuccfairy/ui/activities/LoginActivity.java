@@ -70,17 +70,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private ProgressDialog pDialog;
     // UI references.
-    @BindView(R.id.autoText_login_username) AutoCompleteTextView mEmailView;
-    @BindView(R.id.edt_login_password)      EditText mPasswordView;
-    @BindView(R.id.chk_login_remember_pass) CheckBox rememberpass;
-    @BindView(R.id.scv_login_form)          View mLoginFormView;
-    @BindView(R.id.btn_login_in)            Button mEmailSignInButton;
+    @BindView(R.id.autoText_login_username)
+    AutoCompleteTextView mEmailView;
+    @BindView(R.id.edt_login_password)
+    EditText mPasswordView;
+    @BindView(R.id.chk_login_remember_pass)
+    CheckBox rememberpass;
+    @BindView(R.id.scv_login_form)
+    View mLoginFormView;
+    @BindView(R.id.btn_login_in)
+    Button mEmailSignInButton;
 
-    public static void actionStart(Context context){
-        Intent intent=new Intent();
-        intent.setClass(context,LoginActivity.class);
+    public static void actionStart(Context context) {
+        Intent intent = new Intent();
+        intent.setClass(context, LoginActivity.class);
         context.startActivity(intent);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,8 +100,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         fairyDB = FairyDB.getInstance(this);
         isRemember = pref.getBoolean("remember_Password", false);
         if (isRemember) {
-            String mEmail = pref.getString("mEmail","");
-            String mPassword = pref.getString("mPassword","");
+            String mEmail = pref.getString("mEmail", "");
+            String mPassword = pref.getString("mPassword", "");
             mEmailView.setText(mEmail);
             mPasswordView.setText(mPassword);
             rememberpass.setChecked(true);
@@ -119,6 +125,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
     }
+
     //自动完成填充
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
@@ -140,6 +147,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //        auto.setAdapter(adapter);
         getLoaderManager().initLoader(0, null, this);
     }
+
     //可以请求联系人
     private boolean mayRequestContacts() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -227,9 +235,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask.execute((Void) null);
         }
     }
+
     /**
      * 判断
-     * */
+     */
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
 //        return email.contains("@");
@@ -283,7 +292,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
 //        }
 //    }
-
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         return new CursorLoader(this,
@@ -351,6 +359,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAccount = userID;
             mPassword = password;
         }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -361,18 +370,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             pDialog.show();
 
         }
+
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-            fairyDB.saveUser(new UserBean(0+"","a","a","测试者一号",R.drawable.ic_avatar_0+"",null));
+            fairyDB.saveUser(new UserBean(0 + "", "a", "a", "测试者一号", R.drawable.ic_avatar_0 + "", null));
             try {
-                String user_id = fairyDB.login(mAccount,mPassword);
+                String user_id = fairyDB.login(mAccount, mPassword);
                 // Simulate network access.
                 Thread.sleep(3000);
-                if(user_id == null)
+                if (user_id == null)
                     return false;
                 else {
-                    editor.putString("user_id",user_id);
+                    editor.putString("user_id", user_id);
                     editor.commit();
                 }
             } catch (InterruptedException e) {
@@ -389,11 +399,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (pDialog.isShowing())
                 pDialog.dismiss();
             if (success) {
-                if(rememberpass.isChecked()){
+                if (rememberpass.isChecked()) {
                     editor.putBoolean("remember_Password", true);
                     editor.putBoolean("Login", true);
-                }
-                else {
+                } else {
                     editor.clear();
                 }
                 editor.commit();

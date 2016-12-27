@@ -26,14 +26,14 @@ public class SetAlarmToneAdapter extends RecyclerView.Adapter<SetAlarmToneAdapte
     public Cursor cursor;
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
-    public SetAlarmToneAdapter(Context ctx){
+    public SetAlarmToneAdapter(Context ctx) {
         context = ctx;
         getRing();
     }
 
     @Override
     public SetAlarmToneAdapter.ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.activity_set_alarm_tone_list,null);
+        View v = LayoutInflater.from(context).inflate(R.layout.activity_set_alarm_tone_list, null);
         v.setOnClickListener(this);
         return new ListViewHolder(v);
     }
@@ -42,8 +42,8 @@ public class SetAlarmToneAdapter extends RecyclerView.Adapter<SetAlarmToneAdapte
     public void onBindViewHolder(SetAlarmToneAdapter.ListViewHolder holder, int position) {
         ListViewHolder listViewHolder = holder;
         listViewHolder.tone_path.setText(ringList.get(position));
-        listViewHolder.itemView.setTag(R.id.tag_first,ringList.get(position));
-        listViewHolder.itemView.setTag(R.id.tag_second,position);
+        listViewHolder.itemView.setTag(R.id.tag_first, ringList.get(position));
+        listViewHolder.itemView.setTag(R.id.tag_second, position);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class SetAlarmToneAdapter extends RecyclerView.Adapter<SetAlarmToneAdapte
     }
 
     public void getRing() {
-		/* 新建一个arraylist来接收从系统中获取的短信铃声数据 */
+        /* 新建一个arraylist来接收从系统中获取的短信铃声数据 */
         ringList = new ArrayList<String>();
 		/* 添加“跟随系统”选项 */
         ringList.add("跟随系统");
@@ -83,7 +83,7 @@ public class SetAlarmToneAdapter extends RecyclerView.Adapter<SetAlarmToneAdapte
         this.mOnItemClickListener = listener;
     }
 
-    public class ListViewHolder extends RecyclerView.ViewHolder{
+    public class ListViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tone_path;
 

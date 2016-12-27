@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.eternallove.demo.zuccfairy.util.QRHelper;
 
 import com.eternallove.demo.zuccfairy.R;
@@ -21,22 +22,23 @@ import java.util.Date;
 
 public class CardAcitvity extends AppCompatActivity {
     private static String DATE_FORMAT = "yyyy年MM月dd日 HH:mm";
-    private static final int TOP_Time = 5*60;
-    private static final int BUTTON_Time = 10*60;
+    private static final int TOP_Time = 5 * 60;
+    private static final int BUTTON_Time = 10 * 60;
     public int QR_WIDTH;
     public int QR_HEIGHT;
 
-    public static void actionStart(Context context){
-        Intent intent=new Intent();
-        intent.setClass(context,CardAcitvity.class);
+    public static void actionStart(Context context) {
+        Intent intent = new Intent();
+        intent.setClass(context, CardAcitvity.class);
         context.startActivity(intent);
     }
+
     //5:00~10:00打卡，在生成card前请先调用该函数判断时间
-    public static int checkTime(){
+    public static int checkTime() {
         String datestr[] = DateHelper.dateToString(new Date(System.currentTimeMillis()), "HH:mm").split(":");
         int hour = Integer.valueOf(datestr[0]), min = Integer.valueOf(datestr[1]);
-        if(hour*60+min < TOP_Time) return 0;
-        else if(hour*60+min <= BUTTON_Time) return 1;
+        if (hour * 60 + min < TOP_Time) return 0;
+        else if (hour * 60 + min <= BUTTON_Time) return 1;
         else return 2;
     }
 

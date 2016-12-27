@@ -51,7 +51,7 @@ public class AddScheduleActivity extends AppCompatActivity {
     private AlarmBean alarmBean = new AlarmBean();
     private FairyDB db;
     private int id;
-    private  String mID;
+    private String mID;
 
     @BindView(R.id.alarm_title)
     EditText alarm_title;
@@ -200,10 +200,10 @@ public class AddScheduleActivity extends AppCompatActivity {
 
         //设置开始时间
         if (alarm_start_time.getText().toString().equals("选择开始时间")) {
-            if(isAllDay){
+            if (isAllDay) {
                 alarmBean.setStartTimeHour(0);
                 alarmBean.setStartTimeMinute(0);
-            }else {
+            } else {
                 alarmBean.setStartTimeHour(getToDay().get(Calendar.HOUR_OF_DAY));
                 alarmBean.setStartTimeMinute(getToDay().get(Calendar.MINUTE));
             }
@@ -211,10 +211,10 @@ public class AddScheduleActivity extends AppCompatActivity {
 
         //设置结束时间
         if (alarm_end_time.getText().toString().equals("选择结束时间")) {
-            if(isAllDay){
+            if (isAllDay) {
                 alarmBean.setEndTimeHour(23);
                 alarmBean.setEndTimeMinute(59);
-            }else {
+            } else {
                 alarmBean.setEndTimeHour(getToDay().get(Calendar.HOUR_OF_DAY) + 1);
                 alarmBean.setEndTimeMinute(getToDay().get(Calendar.MINUTE));
             }
@@ -282,7 +282,7 @@ public class AddScheduleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_schedule);
 
-        this.mID = PreferenceManager.getDefaultSharedPreferences(this).getString("user_id",null);
+        this.mID = PreferenceManager.getDefaultSharedPreferences(this).getString("user_id", null);
 
         ButterKnife.bind(this);
 
@@ -441,7 +441,7 @@ public class AddScheduleActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this,MainActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 }

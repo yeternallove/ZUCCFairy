@@ -18,10 +18,13 @@ import butterknife.OnClick;
  */
 public class SetColorActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private CheckBox color_zi,color_lv,color_huang,color_hong,color_hui,color_juhong,color_shenlan;
-    @OnClick(R.id.left_color_back) void finishClose(){
+    private CheckBox color_zi, color_lv, color_huang, color_hong, color_hui, color_juhong, color_shenlan;
+
+    @OnClick(R.id.left_color_back)
+    void finishClose() {
         finish();
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +51,8 @@ public class SetColorActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        Intent intent=new Intent();
-        switch (v.getId()){
+        Intent intent = new Intent();
+        switch (v.getId()) {
             case R.id.color_zi:
                 color_zi.setChecked(true);
                 color_lv.setChecked(false);

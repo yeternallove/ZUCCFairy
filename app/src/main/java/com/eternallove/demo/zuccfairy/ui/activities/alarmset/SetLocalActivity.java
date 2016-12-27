@@ -20,13 +20,15 @@ public class SetLocalActivity extends AppCompatActivity {
 
     @BindView(R.id.ed_local)
     EditText ed_local;
-    @OnClick(R.id.tv_save) void saveAndClose(){
-        Intent intent=new Intent();
-        if(ed_local.getText().toString().equals("")){
+
+    @OnClick(R.id.tv_save)
+    void saveAndClose() {
+        Intent intent = new Intent();
+        if (ed_local.getText().toString().equals("")) {
             intent.putExtra("local", "无");
             setResult(2, intent);
             finish();
-        }else {
+        } else {
             intent.putExtra("local", ed_local.getText().toString());
             setResult(2, intent);
             finish();
@@ -34,9 +36,11 @@ public class SetLocalActivity extends AppCompatActivity {
 
     }
 
-    @OnClick(R.id.left_local_back) void finishClose(){
+    @OnClick(R.id.left_local_back)
+    void finishClose() {
         finish();
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
