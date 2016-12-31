@@ -12,6 +12,71 @@
         rfal:rfal_frame_color="#ffffff"
         rfal:rfal_frame_alpha="0.7"
         >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorPrimary"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/left_menu"
+                    style="@style/imageButtonStyle"
+                    android:src="@drawable/ic_menu_white_24dp" />
+
+                <LinearLayout
+                    android:id="@+id/calendar_open_close"
+                    android:layout_width="270dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/title_day"
+                        android:layout_width="80dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="2015年4月"
+                        android:textColor="#fff" />
+
+                    <ImageView
+                        android:id="@+id/title_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_arrow_drop_up_white_24dp" />
+
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/go_today"
+                    style="@style/imageButtonStyle"
+                    android:src="@drawable/ic_today_white_24dp" />
+            </LinearLayout>
+
+            <!-- CalendarView -->
+            <com.eternallove.demo.zuccfairy.ui.customview.calendar.CalendarView
+                android:id="@+id/calendar_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible" />
+
+            <!-- 显示 pager -->
+            <FrameLayout
+                android:id="@+id/main_frame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></FrameLayout>
+
+            <include layout="@layout/fab_view" />
+
+        </LinearLayout>
+
         <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton
             xmlns:rfab="http://schemas.android.com/apk/res-auto"
             android:id="@+id/activity_main_rfab"

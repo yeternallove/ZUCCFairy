@@ -1,4 +1,4 @@
-package com.eternallove.demo.zuccfairy.service;
+package com.eternallove.demo.zuccfairy.Service;
 
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
