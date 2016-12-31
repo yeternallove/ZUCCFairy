@@ -24,7 +24,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="@dimen/margin_chat_activity"
-            android:src="@drawable/ic_useravatar"
+            android:src="@drawable/ic_login_wait"
             android:scaleType="fitXY" />
 
         <RelativeLayout
@@ -37,10 +37,14 @@
 
             <ImageView
                 android:background="@drawable/select_chatfrom_other_bg"
+                android:maxHeight="@dimen/max_img_picture_size"
+                android:maxWidth="@dimen/max_img_picture_size"
                 android:id="@+id/iv_sendPicture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"
+                android:padding="@dimen/padding_img_picture"
+                android:paddingStart="@dimen/padding_start_img_picture"/>
 
             <LinearLayout
                 android:id="@+id/ll_loading"
@@ -51,7 +55,7 @@
                 android:orientation="vertical" >
 
                 <ProgressBar
-                    android:id="@+id/progressBar"
+                    android:id="@+id/progressBar_picture"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:visibility="visible" />

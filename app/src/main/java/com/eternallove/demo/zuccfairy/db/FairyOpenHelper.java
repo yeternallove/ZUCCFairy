@@ -39,7 +39,8 @@ public class FairyOpenHelper extends SQLiteOpenHelper {
             + "user_id char(20))";
 
     public static final String CREATE_RECEIVED = "create table Received(id integer primary key autoincrement," +
-            "user_id char(20)," +
+            "sender_id char(20)," +
+            "recipient_id char(20)," +
             "timestampe long ," +
             "message text ," +
             "picture text )";

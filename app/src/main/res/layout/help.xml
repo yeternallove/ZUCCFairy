@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFF8E1">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffeb3b"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="意见反馈"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="48sp"
+                android:gravity="start|center"
+                android:text="我有建议"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="48sp"
+                android:gravity="start|center"
+                android:text="我要投诉"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="48sp"
+                android:gravity="start|center"
+                android:text="我要表扬"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="48sp"
+                    android:layout_gravity="end" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="48sp"
+                    android:layout_gravity="end" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="48sp"
+                    android:layout_gravity="end" />
+            </RadioGroup>
+        </LinearLayout>
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:gravity="top"
+        android:hint="您的宝贵建议和意见都会让我们变得更好"
+        android:background="#FFFFFF"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="#ffeb3b"
+        android:padding="8dp"
+        android:text="提交"
+        android:textSize="16sp" />
+</LinearLayout>

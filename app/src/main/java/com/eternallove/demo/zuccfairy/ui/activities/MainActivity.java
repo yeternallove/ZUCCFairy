@@ -22,12 +22,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.eternallove.demo.zuccfairy.R;
 import com.eternallove.demo.zuccfairy.db.FairyDB;
 import com.eternallove.demo.zuccfairy.modle.ReceivedBean;
-import com.eternallove.demo.zuccfairy.modle.UserBean;
 import com.eternallove.demo.zuccfairy.ui.adapters.ChatAdapter;
 
 import java.util.ArrayList;
@@ -219,21 +217,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mPopupWindow.showAsDropDown(mBtnBotDir3, 0, -1 * (mViews[0].getHeight() + NUM_BOT_DIR_3 * mPopupHeight));
                 break;
             case R.id.tv_daily_punch:
-                CardAcitvity.actionStart(MainActivity.this);
+                receivedBean = new ReceivedBean("laiye",User_id, System.currentTimeMillis(), null, R.drawable.month_twelve+"");
+                sendReceive(receivedBean);
+//                CardAcitvity.actionStart(MainActivity.this);
                 mPopupWindow.dismiss();
                 break;
             case R.id.tv_homepage:
-                Toast.makeText(this, "你点击了“home”按键！", Toast.LENGTH_SHORT).show();
+                HomeActivity.actionStart(this);
                 mPopupWindow.dismiss();
                 break;
             case R.id.btn_bot_send:
                 String msg = mEditText.getText().toString();
                 if (msg == null || "".equals(msg))
                     break;
-                receivedBean = new ReceivedBean(User_id, System.currentTimeMillis(), msg, null);
-                mNewList.add(receivedBean);
-                adapter.notifyDataSetChanged();
-                fairyDB.saveReceived(receivedBean);
+                receivedBean = new ReceivedBean(User_id,User_id, System.currentTimeMillis(), msg, null);
+                sendReceive(receivedBean);
                 mEditText.setText("");
                 break;
             default:
@@ -263,4 +261,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+    public void sendReceive(ReceivedBean receivedBean){
+        mNewList.add(receivedBean);
+        adapter.notifyDataSetChanged();
+        fairyDB.saveReceived(receivedBean);
+    }
+
 }

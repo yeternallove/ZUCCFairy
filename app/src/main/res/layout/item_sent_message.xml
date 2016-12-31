@@ -21,28 +21,27 @@
             android:id="@+id/img_userhead"
             android:layout_width="@dimen/size_avatar"
             android:layout_height="@dimen/size_avatar"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:layout_marginRight="@dimen/margin_chat_activity"
+            android:layout_marginEnd="@dimen/margin_chat_activity"
             android:src="@drawable/ic_useravatar"
             android:scaleType="fitXY" />
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/tv_userName"
+            android:text="测试者"
             style="@style/chat_text_name_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_toRightOf="@id/tv_chatcontent"
-            android:layout_below="@id/img_userhead"/>
+            android:layout_toStartOf="@+id/img_userhead"
+            android:layout_marginEnd="@dimen/margin_chat_activity"/>
 
         <TextView
             android:maxWidth="225.0dip"
             android:id="@+id/tv_chatcontent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_chat_activity"
+            android:layout_marginEnd="@dimen/margin_chat_activity"
             android:background="@drawable/select_chatfrom_me_bg"
             android:autoLink="web"
             android:clickable="true"
@@ -51,8 +50,10 @@
             android:lineSpacingExtra="2dp"
             android:textColor="#ff000000"
             android:textSize="15sp"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/img_userhead" />
+            android:layout_below="@+id/tv_userName"
+            android:layout_toStartOf="@+id/img_userhead"
+            android:padding="@dimen/padding_chat_activity"
+            android:paddingEnd="@dimen/padding_end_chat_activity" />
     </RelativeLayout>
 
 </LinearLayout>

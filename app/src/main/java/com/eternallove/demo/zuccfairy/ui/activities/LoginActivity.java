@@ -378,7 +378,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             try {
                 String user_id = fairyDB.login(mAccount, mPassword);
                 // Simulate network access.
-                Thread.sleep(3000);
+                Thread.sleep(1500);
                 if (user_id == null)
                     return false;
                 else {
@@ -403,7 +403,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     editor.putBoolean("remember_Password", true);
                     editor.putBoolean("Login", true);
                 } else {
-                    editor.clear();
+                    editor.putBoolean("remember_Password", false);
                 }
                 editor.commit();
                 MainActivity.actionStart(LoginActivity.this);

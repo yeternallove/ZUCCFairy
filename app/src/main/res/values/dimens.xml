@@ -11,7 +11,12 @@
     <dimen name="shadowRadius_num">5dp</dimen>
     <dimen name="margin_chat_activity">5dp</dimen>
     <dimen name="padding_chat_activity">10dp</dimen>
+    <dimen name="padding_end_chat_activity">15dp</dimen>
 
+    <!--adapter-->
+    <dimen name="max_img_picture_size">88dp</dimen>
+    <dimen name="padding_img_picture">2dp</dimen>
+    <dimen name="padding_start_img_picture">7dp</dimen>
     <!-- Calendar values -->
     <dimen name="circle_selected_size">32dp</dimen>
     <dimen name="day_cell_height">52dp</dimen>

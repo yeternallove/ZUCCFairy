@@ -89,4 +89,14 @@
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/select_icon_bg</item>
     </style>
+
+    <!--home activity-->
+    <style name="RadioBtnMyIcon1">
+        <item name="android:button">@drawable/male_btn</item>
+
+    </style>
+    <style name="RadioBtnMyIcon2">
+        <item name="android:button">@drawable/female_btn</item>
+    </style>
+
 </resources>

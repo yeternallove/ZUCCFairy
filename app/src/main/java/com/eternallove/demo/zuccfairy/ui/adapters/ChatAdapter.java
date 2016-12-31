@@ -12,18 +12,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.eternallove.demo.zuccfairy.R;
+import com.eternallove.demo.zuccfairy.db.FairyDB;
 import com.eternallove.demo.zuccfairy.modle.ReceivedBean;
+import com.eternallove.demo.zuccfairy.ui.activities.CardAcitvity;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.content.Context.CLIPBOARD_SERVICE;
 
 /**
  * @description:
@@ -44,6 +46,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder
     private Context mContext;
     private LayoutInflater layoutInflater;
     private ClipboardManager cmb;
+    private FairyDB fairyDB;
 
     public ChatAdapter(Context context,List<ReceivedBean> pastList,List<ReceivedBean> newList) {
         this.mPastList = pastList;
@@ -52,6 +55,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder
         this.mID = PreferenceManager.getDefaultSharedPreferences(context).getString("user_id",null);
         this.layoutInflater = LayoutInflater.from(mContext);
         this.cmb = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+        this.fairyDB = FairyDB.getInstance(context);
     }
 
     @Override
@@ -60,9 +64,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder
             return TYPE_BOTTOM;
         }
         else {
-            if(getRecivedBean(position).getUser_id() == mID){
+            ReceivedBean receivedBean = getRecivedBean(position);
+            if(receivedBean.getSender_id().equals(mID)){
+                if(receivedBean.getMessage()==null)
+                    return TYPE_PICTURE_SEND;
                 return TYPE_MESSAGE_SEND;
             }else {
+                if(receivedBean.getMessage()==null)
+                    return TYPE_PICTURE_RECEIVED;
                 return TYPE_MESSAGE_RECEIVED;
             }
         }
@@ -90,21 +99,22 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder
 
         switch (getItemViewType(position)){
             case TYPE_MESSAGE_SEND:
-                onBindViewMessageHolder(holder,getRecivedBean(position));
+                onBindViewMessageHolder(holder,position);
                 break;
             case TYPE_MESSAGE_RECEIVED:
-                onBindViewMessageHolder(holder,getRecivedBean(position));
+                onBindViewMessageHolder(holder,position);
                 break;
             case TYPE_PICTURE_SEND:
-                onBindViewPictureHolder(holder,getRecivedBean(position));
+                onBindViewPictureHolder(holder,position);
                 break;
             case TYPE_PICTURE_RECEIVED:
-                onBindViewPictureHolder(holder,getRecivedBean(position));
+                onBindViewPictureHolder(holder,position);
                 break;
             default:break;
         }
     }
-    private void onBindViewMessageHolder(ReceivedHolder holder,ReceivedBean receivedBean){
+    private void onBindViewMessageHolder(ReceivedHolder holder,int position){
+        ReceivedBean receivedBean = getRecivedBean(position);
         MessageHolder messageHolder = (MessageHolder) holder;
         messageHolder.ChatContent.setText(receivedBean.getMessage());
         messageHolder.ChatContent.setOnLongClickListener(new View.OnLongClickListener() {
@@ -126,7 +136,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder
                                     Toast.makeText(mContext, "复制成功", Toast.LENGTH_SHORT).show();
                                 }
                                 else if(item.getItemId() == R.id.action_clip_delete){
-                                    Toast.makeText(mContext, "你点击了“delete”按键！", Toast.LENGTH_SHORT).show();
+                                    boolean delete;
+                                    delete= fairyDB.deleteReceived(receivedBean.getId());
+                                    delete = removeReciveditem(position);
+                                    notifyDataSetChanged();
+                                    Toast.makeText(mContext, delete?"删除成功":"删除失败", Toast.LENGTH_SHORT).show();
                                 }
                                 return false;
                             }
@@ -139,10 +153,56 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder
         messageHolder.Timestamp.setVisibility(View.GONE);
         messageHolder.UserName.setVisibility(View.GONE);
     }
-    private void onBindViewPictureHolder(ReceivedHolder holder,ReceivedBean receivedBean){
+    private void onBindViewPictureHolder(ReceivedHolder holder,int position){
+        ReceivedBean receivedBean = getRecivedBean(position);
         PictureHolder pictureHolder = (PictureHolder) holder;
-//
+        pictureHolder.Timestamp.setVisibility(View.GONE);
+        pictureHolder.progressBar.setVisibility(View.GONE);
+        pictureHolder.Percentage.setVisibility(View.GONE);
+//        pictureHolder.Userhead
+        Glide.with(mContext)
+                .load(Integer.valueOf(receivedBean.getPicture()))
+                .into(pictureHolder.sendPicture);
+        pictureHolder.sendPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CardAcitvity.actionStart(mContext);
+            }
+        });
+        pictureHolder.sendPicture.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+//                popupView = view;
+                PopupMenu popupMenu = new PopupMenu(mContext,view);
+                popupMenu.getMenuInflater()
+                        .inflate(R.menu.menu_clipboard,popupMenu.getMenu());
+                popupMenu.setGravity(Gravity.CENTER);
+                popupMenu.show();
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                     @Override
+                     public boolean onMenuItemClick(MenuItem item) {
+                         if(item.getItemId() == R.id.action_clip_copy){
+                             if(view instanceof TextView) {
+                                 cmb.setPrimaryClip(ClipData.newPlainText("Message",((TextView) view).getText().toString()));
+                             }
+                             Toast.makeText(mContext, "复制成功", Toast.LENGTH_SHORT).show();
+                         }
+                         else if(item.getItemId() == R.id.action_clip_delete){
+                             boolean delete;
+                             fairyDB.deleteReceived(receivedBean.getId());
+                             delete = removeReciveditem(position);
+                             notifyDataSetChanged();
+                             Toast.makeText(mContext, delete?"删除成功":"删除失败", Toast.LENGTH_SHORT).show();
+                         }
+                         return false;
+                     }
+                 }
+                );
+                return false;
+            }
+        });
     }
+
     private ReceivedBean getRecivedBean(int position){
         int length = mNewList.size();
         if(position > length ){
@@ -150,6 +210,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder
         }else{
             return mNewList.get(length  - position);
         }
+    }
+    private boolean removeReciveditem(int position){
+        int length = mNewList.size();
+        if(position > length ){
+            mPastList.remove(position - length - 1);
+        }else{
+           mNewList.remove(length  - position);
+        }
+        return true;
     }
 
     @Override
@@ -168,7 +237,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder
     static class MessageHolder extends ReceivedHolder {
         @BindView(R.id.tv_chatcontent)  TextView ChatContent;
         @BindView(R.id.timestamp)       TextView Timestamp;
-        @BindView(R.id.tv_userName)       TextView UserName;
+        @BindView(R.id.tv_userName)     TextView UserName;
         @BindView(R.id.img_userhead)    ImageView Userhead;
 
         MessageHolder(View itemView) {
@@ -176,6 +245,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder
         }
     }
     static class PictureHolder extends ReceivedHolder {
+        @BindView(R.id.iv_sendPicture)  ImageView sendPicture;
+        @BindView(R.id.progressBar_picture)     ProgressBar progressBar;
         @BindView(R.id.percentage)      TextView Percentage;
         @BindView(R.id.timestamp)       TextView Timestamp;
         @BindView(R.id.tv_userName)       TextView UserName;

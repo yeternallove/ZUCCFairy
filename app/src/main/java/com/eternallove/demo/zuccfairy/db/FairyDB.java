@@ -125,46 +125,62 @@ public class FairyDB {
         return true;
     }
 
+    /**
+     * @param receivedBean
+     */
     public void saveReceived(ReceivedBean receivedBean) {
-        if (receivedBean.getUser_id() == null)
+        if (receivedBean.getSender_id() == null || receivedBean.getRecipient_id() == null)
             return;
-        final String sql = "INSERT INTO Received(user_id,timestampe,message,picture) VALUES(?,?,?,?)";
-        db.execSQL(sql, new Object[]{receivedBean.getUser_id(),
+        final String sql = "INSERT INTO Received(sender_id,recipient_id,timestampe,message,picture) VALUES(?,?,?,?,?)";
+        db.execSQL(sql, new Object[]{receivedBean.getSender_id(),receivedBean.getRecipient_id(),
                 receivedBean.getTimestampe(), receivedBean.getMessage(), receivedBean.getPicture()});
     }
 
     public ReceivedBean queryReceived(int id) {
         ReceivedBean receivedBean = new ReceivedBean();
-        final String sql = "SELECT user_id,timestampe,message,picture FROM Received WHERE id = ?";
+        final String sql = "SELECT sender_id,recipient_id,timestampe,message,picture FROM Received WHERE id = ?";
         Cursor c = db.rawQuery(sql, new String[]{id + ""});
         if (c.moveToFirst()) {
             receivedBean.setId(id);
-            receivedBean.setUser_id(c.getString(0));
-            receivedBean.setTimestampe(c.getLong(1));
-            receivedBean.setMessage(c.getString(2));
-            receivedBean.setPicture(c.getString(3));
+            receivedBean.setSender_id(c.getString(0));
+            receivedBean.setRecipient_id(c.getString(1));
+            receivedBean.setTimestampe(c.getLong(2));
+            receivedBean.setMessage(c.getString(3));
+            receivedBean.setPicture(c.getString(4));
         }
         c.close();
         return receivedBean;
     }
 
-    public List<ReceivedBean> loadReceivedAll(String User_id) {
+    public List<ReceivedBean> loadReceivedAll(String recipient_id) {
         List<ReceivedBean> list = new ArrayList<>();
         ReceivedBean receivedBean;
-        final String sql = "SELECT id,timestampe,message,picture FROM Received WHERE user_id = ? ORDER BY timestampe DESC";
-        Cursor c = db.rawQuery(sql, new String[]{User_id});
+        final String sql = "SELECT id,sender_id,timestampe,message,picture FROM Received WHERE recipient_id = ? ORDER BY timestampe DESC";
+        Cursor c = db.rawQuery(sql, new String[]{recipient_id});
         while (c.moveToNext()) {
             receivedBean = new ReceivedBean();
             receivedBean.setId(c.getInt(0));
-            receivedBean.setUser_id(User_id);
-            receivedBean.setTimestampe(c.getLong(1));
-            receivedBean.setMessage(c.getString(2));
-            receivedBean.setPicture(c.getString(3));
+            receivedBean.setSender_id(c.getString(1));
+            receivedBean.setRecipient_id(recipient_id);
+            receivedBean.setTimestampe(c.getLong(2));
+            receivedBean.setMessage(c.getString(3));
+            receivedBean.setPicture(c.getString(4));
             list.add(receivedBean);
         }
         return list;
     }
 
+    public boolean deleteReceived(int id){
+        final String sql_s = "SELECT * FROM Received WHERE id = ?";
+        final String sql_d = "DELETE FROM Received WHERE id = ?";
+        Cursor c = db.rawQuery(sql_s, new String[]{id+""});
+        if(!c.moveToFirst()) {
+            return false;
+        }
+        c.close();
+        db.execSQL(sql_d, new String[]{id+""});
+        return true;
+    }
     /**
      * 插入数据
      */

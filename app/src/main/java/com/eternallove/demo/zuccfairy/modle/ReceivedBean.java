@@ -8,7 +8,8 @@ package com.eternallove.demo.zuccfairy.modle;
 
 public class ReceivedBean {
     int id;
-    private String user_id;
+    private String sender_id;
+    private String recipient_id;
     private long timestampe;
     private String message;
     private String picture;
@@ -16,8 +17,9 @@ public class ReceivedBean {
     public ReceivedBean() {
     }
 
-    public ReceivedBean(String user_id, long timestampe, String message, String picture) {
-        this.user_id = user_id;
+    public ReceivedBean(String sender_id, String recipient_id,long timestampe, String message, String picture) {
+        this.sender_id = sender_id;
+        this.recipient_id = recipient_id;
         this.timestampe = timestampe;
         this.message = message;
         this.picture = picture;
@@ -31,12 +33,20 @@ public class ReceivedBean {
         this.id = id;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getSender_id() {
+        return sender_id;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setSender_id(String sender_id) {
+        this.sender_id = sender_id;
+    }
+
+    public String getRecipient_id() {
+        return recipient_id;
+    }
+
+    public void setRecipient_id(String recipient_id) {
+        this.recipient_id = recipient_id;
     }
 
     public long getTimestampe() {

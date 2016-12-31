@@ -32,13 +32,17 @@
     <string name="agenda_event_day_duration">d</string>
     <string name="agenda_event_no_events">No events</string>
 
-    <!-- 主页菜单 -->
+    <!-- main activity -->
     <string name="bot_item_1">OneKey</string>
     <string name="bot_item_2">Calender</string>
     <string name="bot_item_3">Me</string>
     <string name="bot_item_send">Send</string>
 
-
+    <!--home activity-->
+    <string name="nickname">西瓜</string>
+    <string name="mobilePhoneNumber">17764526762</string>
+    <string name="exit">exit</string>
+    <string name="birthday">Birthday</string>
 
     <!-- Strings related to login -->
     <string name="prompt_username">Username</string>

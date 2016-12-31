@@ -51,7 +51,7 @@
                 android:orientation="vertical" >
 
                 <ProgressBar
-                    android:id="@+id/progressBar"
+                    android:id="@+id/progressBar_picture"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:visibility="visible" />

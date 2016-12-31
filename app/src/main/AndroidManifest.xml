@@ -46,8 +46,11 @@
         <activity android:name=".ui.activities.alarmset.SetColorActivity" />
         <activity android:name=".ui.activities.alarmset.SetLocalActivity" />
         <activity android:name=".ui.activities.alarmset.SetRePlayActivity" />
-
         <activity android:name=".ui.activities.AlarmRemindActivity" />
+        <activity android:name=".ui.activities.HomeActivity"/>
+        <activity android:name=".ui.activities.InformationActivity"/>
+        <activity android:name=".ui.activities.SettingActivirty"/>
+        <activity android:name=".ui.activities.HelpActivity"/>
 
         <service
             android:name=".service.AlarmService"
