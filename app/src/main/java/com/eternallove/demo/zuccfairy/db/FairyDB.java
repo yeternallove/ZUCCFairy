@@ -327,6 +327,7 @@ public class FairyDB {
         // TODO Auto-generated method stub
         String[] columns = new String[]{
                 "id",
+                "replay",
                 "title",
                 "isAllday",
                 "isVibrate",
@@ -342,7 +343,6 @@ public class FairyDB {
                 "alarmTonePath",
                 "local",
                 "description",
-                "replay",
                 "user_id"
         };
         return db.query("AlarmList", columns, null, null, null, null,
