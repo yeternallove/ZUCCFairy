@@ -22,7 +22,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.eternallove.demo.zuccfairy.R;
-import com.eternallove.demo.zuccfairy.service.SendAlarmBroadcast;
+import com.eternallove.demo.zuccfairy.Service.SendAlarmBroadcast;
 import com.eternallove.demo.zuccfairy.db.FairyDB;
 import com.eternallove.demo.zuccfairy.ui.activities.alarmset.SetAlarmTimeActivity;
 import com.eternallove.demo.zuccfairy.ui.activities.alarmset.SetAlarmToneActivity;

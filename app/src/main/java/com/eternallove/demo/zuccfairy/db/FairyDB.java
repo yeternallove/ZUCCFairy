@@ -202,22 +202,23 @@ public class FairyDB {
             do {
                 AlarmBean bean = new AlarmBean();
                 bean.setId(cursor.getInt(0));
-                bean.setTitle(cursor.getString(1));
-                bean.setIsAllday(cursor.getInt(2));
-                bean.setIsVibrate(cursor.getInt(3));
-                bean.setYear(cursor.getInt(4));
-                bean.setMonth(cursor.getInt(5));
-                bean.setDay(cursor.getInt(6));
-                bean.setStartTimeHour(cursor.getInt(7));
-                bean.setStartTimeMinute(cursor.getInt(8));
-                bean.setEndTimeHour(cursor.getInt(9));
-                bean.setEndTimeMinute(cursor.getInt(10));
-                bean.setAlarmTime(cursor.getString(11));
-                bean.setAlarmColor(cursor.getString(12));
-                bean.setAlarmTonePath(cursor.getString(13));
-                bean.setLocal(cursor.getString(14));
-                bean.setDescription(cursor.getString(15));
-                bean.setReplay(cursor.getString(16));
+                bean.setReplay(cursor.getString(1));
+                bean.setTitle(cursor.getString(2));
+                bean.setIsAllday(cursor.getInt(3));
+                bean.setIsVibrate(cursor.getInt(4));
+                bean.setYear(cursor.getInt(5));
+                bean.setMonth(cursor.getInt(6));
+                bean.setDay(cursor.getInt(7));
+                bean.setStartTimeHour(cursor.getInt(8));
+                bean.setStartTimeMinute(cursor.getInt(9));
+                bean.setEndTimeHour(cursor.getInt(10));
+                bean.setEndTimeMinute(cursor.getInt(11));
+                bean.setAlarmTime(cursor.getString(12));
+                bean.setAlarmColor(cursor.getString(13));
+                bean.setAlarmTonePath(cursor.getString(14));
+                bean.setLocal(cursor.getString(15));
+                bean.setDescription(cursor.getString(16));
+
 
                 beanList.add(bean);
             } while (cursor.moveToNext());
@@ -239,22 +240,22 @@ public class FairyDB {
             do {
                 AlarmBean bean = new AlarmBean();
                 bean.setId(cursor.getInt(0));
-                bean.setTitle(cursor.getString(1));
-                bean.setIsAllday(cursor.getInt(2));
-                bean.setIsVibrate(cursor.getInt(3));
-                bean.setYear(cursor.getInt(4));
-                bean.setMonth(cursor.getInt(5));
-                bean.setDay(cursor.getInt(6));
-                bean.setStartTimeHour(cursor.getInt(7));
-                bean.setStartTimeMinute(cursor.getInt(8));
-                bean.setEndTimeHour(cursor.getInt(9));
-                bean.setEndTimeMinute(cursor.getInt(10));
-                bean.setAlarmTime(cursor.getString(11));
-                bean.setAlarmColor(cursor.getString(12));
-                bean.setAlarmTonePath(cursor.getString(13));
-                bean.setLocal(cursor.getString(14));
-                bean.setDescription(cursor.getString(15));
-                bean.setReplay(cursor.getString(16));
+                bean.setReplay(cursor.getString(1));
+                bean.setTitle(cursor.getString(2));
+                bean.setIsAllday(cursor.getInt(3));
+                bean.setIsVibrate(cursor.getInt(4));
+                bean.setYear(cursor.getInt(5));
+                bean.setMonth(cursor.getInt(6));
+                bean.setDay(cursor.getInt(7));
+                bean.setStartTimeHour(cursor.getInt(8));
+                bean.setStartTimeMinute(cursor.getInt(9));
+                bean.setEndTimeHour(cursor.getInt(10));
+                bean.setEndTimeMinute(cursor.getInt(11));
+                bean.setAlarmTime(cursor.getString(12));
+                bean.setAlarmColor(cursor.getString(13));
+                bean.setAlarmTonePath(cursor.getString(14));
+                bean.setLocal(cursor.getString(15));
+                bean.setDescription(cursor.getString(16));
 
                 beanList.add(bean);
             } while (cursor.moveToNext());
