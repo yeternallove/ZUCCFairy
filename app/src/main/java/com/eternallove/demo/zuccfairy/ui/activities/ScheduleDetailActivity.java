@@ -27,8 +27,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by acer-pc on 2016/4/19.
+ * Created by angelzouxin on 2016/12/31.
  */
+
 public class ScheduleDetailActivity extends AppCompatActivity {
 
     //detail

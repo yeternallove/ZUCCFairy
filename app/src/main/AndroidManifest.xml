@@ -41,6 +41,7 @@
         <activity android:name=".ui.activities.CardAcitvity" />
 
         <activity android:name=".ui.activities.AddScheduleActivity" />
+        <activity android:name=".ui.activities.ScheduleDetailActivity" />
         <activity android:name=".ui.activities.alarmset.SetAlarmTimeActivity" />
         <activity android:name=".ui.activities.alarmset.SetAlarmToneActivity" />
         <activity android:name=".ui.activities.alarmset.SetColorActivity" />
