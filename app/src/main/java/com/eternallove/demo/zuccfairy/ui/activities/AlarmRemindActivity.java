@@ -8,8 +8,9 @@ import android.widget.Toast;
 import com.eternallove.demo.zuccfairy.modle.AlarmBean;
 
 /**
- * Created by acer-pc on 2016/4/21.
+ * Created by angelzouxin on 2016/12/31.
  */
+
 public class AlarmRemindActivity extends AppCompatActivity {
 
     @Override
