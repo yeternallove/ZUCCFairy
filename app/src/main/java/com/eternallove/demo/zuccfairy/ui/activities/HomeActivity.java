@@ -54,7 +54,7 @@ public class HomeActivity extends Activity {
     private void initHomepages() {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.homePageViewPager);
         final List<View> viewList = new ArrayList<>();
-        View myView = View.inflate(this, R.layout.my, null);
+        View myView = View.inflate(this, R.layout.activity_home_my, null);
         viewList.add(myView);
         initMy();//初始化数据
         HomePageAdapter myAdapter = new HomePageAdapter(HomeActivity.this, R.layout.homepage_item, myList);

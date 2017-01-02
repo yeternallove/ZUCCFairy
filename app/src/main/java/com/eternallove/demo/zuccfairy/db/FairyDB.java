@@ -6,12 +6,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.eternallove.demo.zuccfairy.modle.AlarmBean;
-import com.eternallove.demo.zuccfairy.modle.ReceivedBean;
+import com.eternallove.demo.zuccfairy.modle.ChatMessageBean;
+import com.eternallove.demo.zuccfairy.modle.ReplyBean;
 import com.eternallove.demo.zuccfairy.modle.UserBean;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @description:
@@ -126,61 +129,92 @@ public class FairyDB {
     }
 
     /**
-     * @param receivedBean
+     * @param chatMessageBean
      */
-    public void saveReceived(ReceivedBean receivedBean) {
-        if (receivedBean.getSender_id() == null || receivedBean.getRecipient_id() == null)
+    public void saveChat(ChatMessageBean chatMessageBean) {
+        if (chatMessageBean.getSender_id() == null || chatMessageBean.getRecipient_id() == null)
             return;
-        final String sql = "INSERT INTO Received(sender_id,recipient_id,timestampe,message,picture) VALUES(?,?,?,?,?)";
-        db.execSQL(sql, new Object[]{receivedBean.getSender_id(),receivedBean.getRecipient_id(),
-                receivedBean.getTimestampe(), receivedBean.getMessage(), receivedBean.getPicture()});
+        final String sql = "INSERT INTO Chat(sender_id,recipient_id,timestampe,message,picture) VALUES(?,?,?,?,?)";
+        db.execSQL(sql, new Object[]{chatMessageBean.getSender_id(), chatMessageBean.getRecipient_id(),
+                chatMessageBean.getTimestampe(), chatMessageBean.getMessage(), chatMessageBean.getPicture()});
     }
 
-    public ReceivedBean queryReceived(int id) {
-        ReceivedBean receivedBean = new ReceivedBean();
-        final String sql = "SELECT sender_id,recipient_id,timestampe,message,picture FROM Received WHERE id = ?";
+    public ChatMessageBean queryChat(int id) {
+        ChatMessageBean chatMessageBean = new ChatMessageBean();
+        final String sql = "SELECT sender_id,recipient_id,timestampe,message,picture FROM Chat WHERE id = ?";
         Cursor c = db.rawQuery(sql, new String[]{id + ""});
         if (c.moveToFirst()) {
-            receivedBean.setId(id);
-            receivedBean.setSender_id(c.getString(0));
-            receivedBean.setRecipient_id(c.getString(1));
-            receivedBean.setTimestampe(c.getLong(2));
-            receivedBean.setMessage(c.getString(3));
-            receivedBean.setPicture(c.getString(4));
+            chatMessageBean.setId(id);
+            chatMessageBean.setSender_id(c.getString(0));
+            chatMessageBean.setRecipient_id(c.getString(1));
+            chatMessageBean.setTimestampe(c.getLong(2));
+            chatMessageBean.setMessage(c.getString(3));
+            chatMessageBean.setPicture(c.getString(4));
         }
         c.close();
-        return receivedBean;
+        return chatMessageBean;
     }
 
-    public List<ReceivedBean> loadReceivedAll(String recipient_id) {
-        List<ReceivedBean> list = new ArrayList<>();
-        ReceivedBean receivedBean;
-        final String sql = "SELECT id,sender_id,timestampe,message,picture FROM Received WHERE recipient_id = ? ORDER BY timestampe DESC";
+    /**
+     *  public static final String CREATE_CHAT = "create table Chat(id integer primary key autoincrement,"
+     + "sender_id char(20),"
+     + "recipient_id char(20),"
+     + "timestampe long ,"
+     + "message text ,"
+     + "picture text )";
+     * @param recipient_id
+     * @return
+     */
+    public List<ChatMessageBean> loadChatAll(String recipient_id) {
+        List<ChatMessageBean> list = new ArrayList<>();
+        ChatMessageBean chatMessageBean;
+        final String sql = "SELECT id,sender_id,timestampe,message,picture FROM Chat WHERE recipient_id = ? ORDER BY timestampe DESC";
         Cursor c = db.rawQuery(sql, new String[]{recipient_id});
         while (c.moveToNext()) {
-            receivedBean = new ReceivedBean();
-            receivedBean.setId(c.getInt(0));
-            receivedBean.setSender_id(c.getString(1));
-            receivedBean.setRecipient_id(recipient_id);
-            receivedBean.setTimestampe(c.getLong(2));
-            receivedBean.setMessage(c.getString(3));
-            receivedBean.setPicture(c.getString(4));
-            list.add(receivedBean);
+            chatMessageBean = new ChatMessageBean();
+            chatMessageBean.setId(c.getInt(0));
+            chatMessageBean.setSender_id(c.getString(1));
+            chatMessageBean.setRecipient_id(recipient_id);
+            chatMessageBean.setTimestampe(c.getLong(2));
+            chatMessageBean.setMessage(c.getString(3));
+            chatMessageBean.setPicture(c.getString(4));
+            list.add(chatMessageBean);
         }
         return list;
     }
 
-    public boolean deleteReceived(int id){
-        final String sql_s = "SELECT * FROM Received WHERE id = ?";
-        final String sql_d = "DELETE FROM Received WHERE id = ?";
+    public boolean deleteChat(int id){
+        final String sql_s = "SELECT * FROM Chat WHERE id = ?";
+        final String sql_d = "DELETE FROM Chat WHERE id = ?";
         Cursor c = db.rawQuery(sql_s, new String[]{id+""});
         if(!c.moveToFirst()) {
             return false;
         }
         c.close();
-        db.execSQL(sql_d, new String[]{id+""});
+        db.execSQL(sql_d, new Object[]{id});
         return true;
     }
+//    public void saveReply(ReplyBean replyBean){
+//        final String sql_s = "SELECT * FROM Reply WHERE key = ?";
+//        final String sql_i = "INSERT INTO Reply (key,content) VALUES(?,?)";
+//        Cursor c = db.rawQuery(sql_s,new String[]{replyBean.getKey()});
+//        if(c.moveToFirst())
+//            return;
+//        db.execSQL(sql_i,new Object[]{replyBean.getKey(),replyBean.getContent()});
+//    }
+//    public Map<String,String> loadReply(){
+//        Map<String,String> replymap = new HashMap<>();
+//        String key;
+//        String content;
+//        final String sql = "SELECT key,content FROM Reply";
+//        Cursor c = db.rawQuery(sql,null);
+//        while (c.moveToNext()){
+//            key = c.getString(0);
+//            content = c.getString(1);
+//            replymap.put(key,content);
+//        }
+//        return replymap;
+//    }
     /**
      * 插入数据
      */

@@ -23,6 +23,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -41,6 +42,8 @@ import java.util.List;
 import com.eternallove.demo.zuccfairy.R;
 import com.eternallove.demo.zuccfairy.db.FairyDB;
 import com.eternallove.demo.zuccfairy.modle.UserBean;
+import com.eternallove.demo.zuccfairy.util.HttpHandler;
+import com.eternallove.demo.zuccfairy.util.JsonUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,6 +61,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
+
+    private static final String url = "http://101.200.49.232/eternallove.json";
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -374,21 +379,35 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-            fairyDB.saveUser(new UserBean(0 + "", "a", "a", "测试者一号", R.drawable.ic_avatar_0 + "", null));
-            try {
-                String user_id = fairyDB.login(mAccount, mPassword);
-                // Simulate network access.
-                Thread.sleep(1500);
-                if (user_id == null)
-                    return false;
-                else {
-                    editor.putString("user_id", user_id);
-                    editor.commit();
-                }
-            } catch (InterruptedException e) {
-                return false;
-            }
+//            HttpHandler hh = new HttpHandler();
+//            String jsonStr = hh.makeServiceCall(url);
+//            Log.e("json", "Response from url: " + jsonStr);
+            String jsonStr = "{\n" +
+                    "    \"user\": [\n" +
+                    "        {\n" +
+                    "            \"user_id\": \"0\",\n" +
+                    "            \"account\": \"a\",\n" +
+                    "            \"pwd\": \"a\",\n" +
+                    "            \"name\": \"大城\"\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "            \"user_id\": \"1\",\n" +
+                    "            \"account\": \"b\",\n" +
+                    "            \"pwd\": \"b\",\n" +
+                    "            \"name\": \"殇\"\n" +
+                    "        }\n" +
+                    "    ]\n" +
+                    "}";
+            JsonUtil jsonUtil = new JsonUtil(LoginActivity.this,jsonStr);
+            jsonUtil.refreshSQLite();
 
+            String user_id = fairyDB.login(mAccount, mPassword);
+            if (user_id == null)
+                return false;
+            else {
+                editor.putString("user_id", user_id);
+                editor.commit();
+            }
             // TODO: register the new account here.
             return true;
         }

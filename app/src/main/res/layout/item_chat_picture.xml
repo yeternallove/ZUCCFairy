@@ -37,6 +37,7 @@
 
             <ImageView
                 android:background="@drawable/select_chatfrom_other_bg"
+                android:adjustViewBounds="true"
                 android:maxHeight="@dimen/max_img_picture_size"
                 android:maxWidth="@dimen/max_img_picture_size"
                 android:id="@+id/iv_sendPicture"

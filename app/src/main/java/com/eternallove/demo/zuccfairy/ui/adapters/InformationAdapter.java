@@ -1,6 +1,7 @@
 package com.eternallove.demo.zuccfairy.ui.adapters;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import com.eternallove.demo.zuccfairy.R;
 import com.eternallove.demo.zuccfairy.modle.Information;
+import com.eternallove.demo.zuccfairy.ui.activities.LoginActivity;
+import com.eternallove.demo.zuccfairy.ui.activities.MainActivity;
 
 import java.util.List;
 
@@ -19,9 +22,11 @@ import java.util.List;
 
 public class InformationAdapter extends ArrayAdapter<Information> {
     private int resourceId;
+    private Context mcontext;
 
     public InformationAdapter(Context context, int textViewResourceId, List<Information> objects) {
         super(context, textViewResourceId, objects);
+        this.mcontext = context;
         resourceId = textViewResourceId;
     }
 
@@ -63,6 +68,15 @@ public class InformationAdapter extends ArrayAdapter<Information> {
             viewHolder.informationImage.setVisibility(View.GONE);
         }
         viewHolder.informationName.setText(information.getName());
+        if(information.getName().equals("退出账号哦")){
+            viewHolder.informationName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PreferenceManager.getDefaultSharedPreferences(mcontext).edit().putBoolean("Login", false);
+                    LoginActivity.actionStart(mcontext);
+                }
+            });
+        }
         if (information.getMessage() != null) {
             viewHolder.informationMessage.setText(information.getMessage());
         }else{

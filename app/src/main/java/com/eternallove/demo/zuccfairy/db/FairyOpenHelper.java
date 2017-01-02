@@ -38,12 +38,15 @@ public class FairyOpenHelper extends SQLiteOpenHelper {
             + "description char(100),"
             + "user_id char(20))";
 
-    public static final String CREATE_RECEIVED = "create table Received(id integer primary key autoincrement," +
-            "sender_id char(20)," +
-            "recipient_id char(20)," +
-            "timestampe long ," +
-            "message text ," +
-            "picture text )";
+    public static final String CREATE_CHAT = "create table Chat(id integer primary key autoincrement,"
+            + "sender_id char(20),"
+            + "recipient_id char(20),"
+            + "timestampe long ,"
+            + "message text ,"
+            + "picture text )";
+
+//    public static final String CREATE_REPLY ="create table Reply(key char(20) primary key ,"
+//            + "content text)";
 
     public FairyOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -53,14 +56,14 @@ public class FairyOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_USER);
         db.execSQL(CREATE_ALARM);
-        db.execSQL(CREATE_RECEIVED);
+        db.execSQL(CREATE_CHAT);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("drop table if exists User");
         db.execSQL("drop table if exists AlarmList");
-        db.execSQL("drop table if exists Received");
+        db.execSQL("drop table if exists Chat");
         onCreate(db);
     }
 }

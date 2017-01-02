@@ -2,11 +2,13 @@ package com.eternallove.demo.zuccfairy.ui.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -22,14 +24,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eternallove.demo.zuccfairy.R;
 import com.eternallove.demo.zuccfairy.db.FairyDB;
-import com.eternallove.demo.zuccfairy.modle.ReceivedBean;
+import com.eternallove.demo.zuccfairy.modle.ChatMessageBean;
 import com.eternallove.demo.zuccfairy.ui.adapters.ChatAdapter;
+import com.eternallove.demo.zuccfairy.util.HttpHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Handler;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
@@ -52,9 +58,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mtvHomepage;
     private FairyDB fairyDB;
     private ChatAdapter adapter;
-    private ReceivedBean receivedBean;
-    private List<ReceivedBean> mPastList;
-    private List<ReceivedBean> mNewList;
+    private ChatMessageBean chatMessageBean;
+    private List<ChatMessageBean> mPastList;
+    private List<ChatMessageBean> mNewList;
+    private List<ChatMessageBean> mList;
+    private int index;
+    private int hindex;
+//    private Map<String,String > replymap;
 
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -111,19 +121,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new GetReceived().execute((Void) null);
+                new GetChat().execute((Void) null);
             }
         });
         this.fairyDB = FairyDB.getInstance(this);
+//        replymap = fairyDB.loadReply();
         User_id = PreferenceManager.getDefaultSharedPreferences(this).getString("user_id", null);
-        mPastList = fairyDB.loadReceivedAll(User_id);
+        mList = fairyDB.loadChatAll(User_id);
+        index = 0;
+        hindex = Math.min(2,mList.size());
+        mPastList = new ArrayList<>();
+        for(; index < hindex; index++){
+            mPastList.add(mList.get(index));
+        }
         mNewList = new ArrayList<>();
         adapter = new ChatAdapter(MainActivity.this, mPastList, mNewList);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(
                 new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, true));
         mRecyclerView.setHasFixedSize(true);
-        new GetReceived().execute((Void) null);
+        new GetChat().execute((Void) null);
     }
 
     /**
@@ -192,6 +209,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return false;
     }
+
     public boolean isShouldHideInput(MotionEvent event){
         int[] leftTop = { 0, 0 };
         mEditText.getLocationInWindow(leftTop);
@@ -202,6 +220,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return false;
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -217,8 +236,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mPopupWindow.showAsDropDown(mBtnBotDir3, 0, -1 * (mViews[0].getHeight() + NUM_BOT_DIR_3 * mPopupHeight));
                 break;
             case R.id.tv_daily_punch:
-                receivedBean = new ReceivedBean("laiye",User_id, System.currentTimeMillis(), null, R.drawable.month_twelve+"");
-                sendReceive(receivedBean);
+                chatMessageBean = new ChatMessageBean("laiye",User_id, System.currentTimeMillis(), null, R.drawable.calendar+"");
+                chat(chatMessageBean);
 //                CardAcitvity.actionStart(MainActivity.this);
                 mPopupWindow.dismiss();
                 break;
@@ -228,10 +247,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_bot_send:
                 String msg = mEditText.getText().toString();
-                if (msg == null || "".equals(msg))
+                if (msg == null || "".equals(msg)) {
+                    Toast.makeText(this, this.getResources().getString(R.string.send_the_content_is_empty), Toast.LENGTH_SHORT).show();
                     break;
-                receivedBean = new ReceivedBean(User_id,User_id, System.currentTimeMillis(), msg, null);
-                sendReceive(receivedBean);
+                }
+                chatMessageBean = new ChatMessageBean(User_id,User_id, System.currentTimeMillis(), msg, null);
+                chat(chatMessageBean);
+                //TODO:回复
+                new SendChat().execute(chatMessageBean.getMessage(),User_id);
                 mEditText.setText("");
                 break;
             default:
@@ -239,7 +262,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private class GetReceived extends AsyncTask<Void, Void, Void> {
+    public void chat(ChatMessageBean chatMessageBean){
+        mNewList.add(chatMessageBean);
+        adapter.notifyDataSetChanged();
+        fairyDB.saveChat(chatMessageBean);
+    }
+
+    private class GetChat extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
@@ -249,22 +278,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         protected Void doInBackground(Void... arg0) {
-            //TODO : get date from ...then update mReceivedList
+            //TODO : get date from ...then update mChatList
             return null;
         }
 
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+            hindex = Math.min(hindex+5,mList.size());
+            for(; index < hindex; index++){
+                mPastList.add(mList.get(index));
+            }
             adapter.notifyDataSetChanged();
             mSwipeRefreshLayout.setRefreshing(false);
         }
 
     }
-    public void sendReceive(ReceivedBean receivedBean){
-        mNewList.add(receivedBean);
-        adapter.notifyDataSetChanged();
-        fairyDB.saveReceived(receivedBean);
-    }
+    private class SendChat extends AsyncTask<String,Void,ChatMessageBean> {
 
+        @Override
+        protected ChatMessageBean doInBackground(String... send_message) {
+            ChatMessageBean chat = HttpHandler.sendMessage(send_message[0],send_message[1]);
+            return chat;
+        }
+
+        @Override
+        protected void onPostExecute(ChatMessageBean chatMessage) {
+            chat(chatMessage);
+        }
+    }
 }

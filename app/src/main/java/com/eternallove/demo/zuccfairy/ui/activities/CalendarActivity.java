@@ -23,7 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eternallove.demo.zuccfairy.R;
-import com.eternallove.demo.zuccfairy.Service.SendAlarmBroadcast;
+import com.eternallove.demo.zuccfairy.service.SendAlarmBroadcast;
 import com.eternallove.demo.zuccfairy.db.FairyDB;
 import com.eternallove.demo.zuccfairy.ui.customview.calendar.CalendarView;
 import com.eternallove.demo.zuccfairy.ui.fragment.ContentFragment;
@@ -224,7 +224,7 @@ public class CalendarActivity extends AppCompatActivity implements RapidFloating
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
         List<RFACLabelItem> items = new ArrayList<>();
         items.add(new RFACLabelItem<Integer>()
-                .setLabel("活动")
+                .setLabel("新建活动")
                 .setResId(R.drawable.ic_access_alarms_white_24dp)
                 .setIconNormalColor(0xffd84315)
                 .setIconPressedColor(0xffbf360c)
@@ -240,7 +240,7 @@ public class CalendarActivity extends AppCompatActivity implements RapidFloating
                 .setWrapper(0)
         );
         items.add(new RFACLabelItem<Integer>()
-                .setLabel("日程")
+                .setLabel("查看日程")
                 .setResId(R.drawable.ic_today_grey_900_24dp)
                 .setIconNormalColor(0xffd84315)
                 .setIconPressedColor(0xffbf360c)
@@ -248,7 +248,7 @@ public class CalendarActivity extends AppCompatActivity implements RapidFloating
                 .setWrapper(0)
         );
         items.add(new RFACLabelItem<Integer>()
-                .setLabel("周程")
+                .setLabel("查看周程")
                 .setResId(R.drawable.ic_receipt_grey_900_24dp)
                 .setIconNormalColor(0xffd84315)
                 .setIconPressedColor(0xffbf360c)

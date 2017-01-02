@@ -23,7 +23,7 @@ public class SettingActivirty extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         //在oncreate（）方法中创建了adapter对象，并将adapter作为适配器传递给了listview
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.setting);
+        setContentView(R.layout.activity_home_setting);
 
         final Context context = this;
 

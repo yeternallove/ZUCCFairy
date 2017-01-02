@@ -24,7 +24,7 @@
             rfab:rfab_color_normal="#F44336"
             rfab:rfab_color_pressed="#263238"
             rfab:rfab_shadow_radius="7dp"
-            rfab:rfab_shadow_color="#999999"
+            rfab:rfab_shadow_color="#1919c0"
             rfab:rfab_shadow_dx="0dp"
             rfab:rfab_shadow_dy="5dp" />
 

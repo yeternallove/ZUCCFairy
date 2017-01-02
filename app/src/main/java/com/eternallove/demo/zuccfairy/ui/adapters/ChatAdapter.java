@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.eternallove.demo.zuccfairy.R;
 import com.eternallove.demo.zuccfairy.db.FairyDB;
-import com.eternallove.demo.zuccfairy.modle.ReceivedBean;
+import com.eternallove.demo.zuccfairy.modle.ChatMessageBean;
 import com.eternallove.demo.zuccfairy.ui.activities.CardAcitvity;
 
 import java.util.List;
@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
  * @author: eternallove
  * @date: 2016/12/25
  */
-public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder> {
+public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
 
     private static final int TYPE_BOTTOM = 0x0;
     private static final int TYPE_MESSAGE_SEND = 0x1;
@@ -40,15 +40,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder
     private static final int TYPE_MESSAGE_RECEIVED = 0x3;
     private static final int TYPE_PICTURE_RECEIVED = 0x4;
     private final String mID;
-    private List<ReceivedBean> mPastList;
-    private List<ReceivedBean> mNewList;
+    private List<ChatMessageBean> mPastList;
+    private List<ChatMessageBean> mNewList;
 
     private Context mContext;
     private LayoutInflater layoutInflater;
     private ClipboardManager cmb;
     private FairyDB fairyDB;
 
-    public ChatAdapter(Context context,List<ReceivedBean> pastList,List<ReceivedBean> newList) {
+    public ChatAdapter(Context context, List<ChatMessageBean> pastList, List<ChatMessageBean> newList) {
         this.mPastList = pastList;
         this.mNewList = newList;
         this.mContext = context;
@@ -64,13 +64,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder
             return TYPE_BOTTOM;
         }
         else {
-            ReceivedBean receivedBean = getRecivedBean(position);
-            if(receivedBean.getSender_id().equals(mID)){
-                if(receivedBean.getMessage()==null)
+            ChatMessageBean chatMessageBean = getRecivedBean(position);
+            if(chatMessageBean.getSender_id().equals(mID)){
+                if(chatMessageBean.getMessage()==null)
                     return TYPE_PICTURE_SEND;
                 return TYPE_MESSAGE_SEND;
             }else {
-                if(receivedBean.getMessage()==null)
+                if(chatMessageBean.getMessage()==null)
                     return TYPE_PICTURE_RECEIVED;
                 return TYPE_MESSAGE_RECEIVED;
             }
@@ -78,24 +78,24 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder
     }
 
     @Override
-    public ReceivedHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ChatHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType){
             case TYPE_MESSAGE_SEND:
                 return new MessageHolder(layoutInflater.inflate(R.layout.item_sent_message, parent, false));
             case TYPE_MESSAGE_RECEIVED:
-                return new MessageHolder(layoutInflater.inflate(R.layout.item_received_message, parent, false));
+                return new MessageHolder(layoutInflater.inflate(R.layout.item_chat_message, parent, false));
             case TYPE_PICTURE_SEND:
                 return new PictureHolder(layoutInflater.inflate(R.layout.item_sent_picture, parent, false));
             case TYPE_PICTURE_RECEIVED:
-                return new PictureHolder(layoutInflater.inflate(R.layout.item_received_picture, parent, false));
+                return new PictureHolder(layoutInflater.inflate(R.layout.item_chat_picture, parent, false));
             case TYPE_BOTTOM:
-                return new ReceivedHolder(layoutInflater.inflate(R.layout.item_chat_null,parent, false));
+                return new ChatHolder(layoutInflater.inflate(R.layout.item_chat_null,parent, false));
             default:return null;
         }
     }
 
     @Override
-    public void onBindViewHolder(ReceivedHolder holder, int position) {
+    public void onBindViewHolder(ChatHolder holder, int position) {
 
         switch (getItemViewType(position)){
             case TYPE_MESSAGE_SEND:
@@ -113,10 +113,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder
             default:break;
         }
     }
-    private void onBindViewMessageHolder(ReceivedHolder holder,int position){
-        ReceivedBean receivedBean = getRecivedBean(position);
+    private void onBindViewMessageHolder(ChatHolder holder, int position){
+        ChatMessageBean chatMessageBean = getRecivedBean(position);
         MessageHolder messageHolder = (MessageHolder) holder;
-        messageHolder.ChatContent.setText(receivedBean.getMessage());
+        messageHolder.ChatContent.setText(chatMessageBean.getMessage());
         messageHolder.ChatContent.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -137,7 +137,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder
                                 }
                                 else if(item.getItemId() == R.id.action_clip_delete){
                                     boolean delete;
-                                    delete= fairyDB.deleteReceived(receivedBean.getId());
+                                    delete= fairyDB.deleteChat(chatMessageBean.getId());
                                     delete = removeReciveditem(position);
                                     notifyDataSetChanged();
                                     Toast.makeText(mContext, delete?"删除成功":"删除失败", Toast.LENGTH_SHORT).show();
@@ -153,16 +153,18 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder
         messageHolder.Timestamp.setVisibility(View.GONE);
         messageHolder.UserName.setVisibility(View.GONE);
     }
-    private void onBindViewPictureHolder(ReceivedHolder holder,int position){
-        ReceivedBean receivedBean = getRecivedBean(position);
+    private void onBindViewPictureHolder(ChatHolder holder, int position){
+        ChatMessageBean chatMessageBean = getRecivedBean(position);
         PictureHolder pictureHolder = (PictureHolder) holder;
         pictureHolder.Timestamp.setVisibility(View.GONE);
         pictureHolder.progressBar.setVisibility(View.GONE);
         pictureHolder.Percentage.setVisibility(View.GONE);
 //        pictureHolder.Userhead
+
         Glide.with(mContext)
-                .load(Integer.valueOf(receivedBean.getPicture()))
-                .into(pictureHolder.sendPicture);
+            .load(Integer.valueOf(chatMessageBean.getPicture()))
+            .placeholder(R.color.colorImagePlaceHolder)
+            .into(pictureHolder.sendPicture);
         pictureHolder.sendPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -189,7 +191,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder
                          }
                          else if(item.getItemId() == R.id.action_clip_delete){
                              boolean delete;
-                             fairyDB.deleteReceived(receivedBean.getId());
+                             fairyDB.deleteChat(chatMessageBean.getId());
                              delete = removeReciveditem(position);
                              notifyDataSetChanged();
                              Toast.makeText(mContext, delete?"删除成功":"删除失败", Toast.LENGTH_SHORT).show();
@@ -203,7 +205,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder
         });
     }
 
-    private ReceivedBean getRecivedBean(int position){
+    private ChatMessageBean getRecivedBean(int position){
         int length = mNewList.size();
         if(position > length ){
             return mPastList.get(position - length - 1);
@@ -226,15 +228,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder
         return mNewList.size()+ mPastList.size() + 1;
     }
 
-    static class ReceivedHolder extends RecyclerView.ViewHolder {
+    static class ChatHolder extends RecyclerView.ViewHolder {
 
-        ReceivedHolder(View itemView) {
+        ChatHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
     }
 
-    static class MessageHolder extends ReceivedHolder {
+    static class MessageHolder extends ChatHolder {
         @BindView(R.id.tv_chatcontent)  TextView ChatContent;
         @BindView(R.id.timestamp)       TextView Timestamp;
         @BindView(R.id.tv_userName)     TextView UserName;
@@ -244,7 +246,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ReceivedHolder
             super(itemView);
         }
     }
-    static class PictureHolder extends ReceivedHolder {
+    static class PictureHolder extends ChatHolder {
         @BindView(R.id.iv_sendPicture)  ImageView sendPicture;
         @BindView(R.id.progressBar_picture)     ProgressBar progressBar;
         @BindView(R.id.percentage)      TextView Percentage;

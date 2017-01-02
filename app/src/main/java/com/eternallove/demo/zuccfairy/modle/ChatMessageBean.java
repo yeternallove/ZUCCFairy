@@ -6,7 +6,7 @@ package com.eternallove.demo.zuccfairy.modle;
  * @date: 2016/12/25 15:28
  */
 
-public class ReceivedBean {
+public class ChatMessageBean {
     int id;
     private String sender_id;
     private String recipient_id;
@@ -14,10 +14,10 @@ public class ReceivedBean {
     private String message;
     private String picture;
 
-    public ReceivedBean() {
+    public ChatMessageBean() {
     }
 
-    public ReceivedBean(String sender_id, String recipient_id,long timestampe, String message, String picture) {
+    public ChatMessageBean(String sender_id, String recipient_id, long timestampe, String message, String picture) {
         this.sender_id = sender_id;
         this.recipient_id = recipient_id;
         this.timestampe = timestampe;
