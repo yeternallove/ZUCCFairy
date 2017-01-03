@@ -2,6 +2,9 @@ package com.eternallove.demo.zuccfairy.ui.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.eternallove.demo.zuccfairy.R;
@@ -26,6 +29,13 @@ public class InformationActivity extends Activity {
         InformationAdapter informationAdapter = new InformationAdapter(InformationActivity.this, R.layout.information_item, informationList);
         ListView informationListView = (ListView) findViewById(R.id.informationListView);
         informationListView.setAdapter(informationAdapter);
+
+        informationListView.setOnItemClickListener((adapterView, view, i, l) -> {
+            if(i == 5){
+                PreferenceManager.getDefaultSharedPreferences(InformationActivity.this).edit().putBoolean("Login", false);
+                LoginActivity.actionStart(InformationActivity.this);
+            }
+        });
     }
 
     private void initinformationList() {
