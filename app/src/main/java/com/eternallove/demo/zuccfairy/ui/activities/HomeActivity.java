@@ -64,7 +64,7 @@ public class HomeActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                 HomePage homePage = myList.get(position);
-                Toast.makeText(HomeActivity.this, homePage.getName(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(HomeActivity.this, homePage.getName(), Toast.LENGTH_SHORT).show();
                 if(position==0){
                     Intent intent = new Intent();
                     intent.setClass(HomeActivity.this, SettingActivirty.class);

@@ -68,15 +68,6 @@ public class InformationAdapter extends ArrayAdapter<Information> {
             viewHolder.informationImage.setVisibility(View.GONE);
         }
         viewHolder.informationName.setText(information.getName());
-        if(information.getName().equals("退出账号哦")){
-            viewHolder.informationName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    PreferenceManager.getDefaultSharedPreferences(mcontext).edit().putBoolean("Login", false);
-                    LoginActivity.actionStart(mcontext);
-                }
-            });
-        }
         if (information.getMessage() != null) {
             viewHolder.informationMessage.setText(information.getMessage());
         }else{
