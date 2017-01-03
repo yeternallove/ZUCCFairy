@@ -19,6 +19,7 @@
     <string name="daily_punch">Daily Punch</string>
     <string name="homepage">Home</string>
     <string name="send_the_content_is_empty">Send the content is empty</string>
+    <string name="card_string_push">{num}人正在参与，比{percentage}%的人起的早</string>
 
     <!-- Clipboard -->
     <string name="clipboard_copy">Copy</string>

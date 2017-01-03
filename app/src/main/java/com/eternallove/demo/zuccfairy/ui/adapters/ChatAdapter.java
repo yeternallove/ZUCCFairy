@@ -21,6 +21,7 @@ import com.eternallove.demo.zuccfairy.R;
 import com.eternallove.demo.zuccfairy.db.FairyDB;
 import com.eternallove.demo.zuccfairy.modle.ChatMessageBean;
 import com.eternallove.demo.zuccfairy.ui.activities.CardAcitvity;
+import com.eternallove.demo.zuccfairy.util.DateUtil;
 
 import java.util.List;
 
@@ -150,13 +151,32 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
             }
         });
 //        messageHolder.imgUserhead
-        messageHolder.Timestamp.setVisibility(View.GONE);
+        if(position < getItemCount()-1){
+            ChatMessageBean chatMessageOld = getRecivedBean(position+1);
+            if(chatMessageOld.getTimestampe()-chatMessageBean.getTimestampe() > 1800000){
+                messageHolder.Timestamp.setText(DateUtil.getReportDate(chatMessageBean.getTimestampe()));
+            }else{
+                messageHolder.Timestamp.setVisibility(View.GONE);
+            }
+        }else {
+            messageHolder.Timestamp.setText(DateUtil.getReportDate(chatMessageBean.getTimestampe()));
+        }
         messageHolder.UserName.setVisibility(View.GONE);
     }
     private void onBindViewPictureHolder(ChatHolder holder, int position){
         ChatMessageBean chatMessageBean = getRecivedBean(position);
         PictureHolder pictureHolder = (PictureHolder) holder;
-        pictureHolder.Timestamp.setVisibility(View.GONE);
+        if(position < getItemCount()-1){
+            ChatMessageBean chatMessageOld = getRecivedBean(position+1);
+            if(chatMessageOld.getTimestampe()-chatMessageBean.getTimestampe() > 1800000){
+                pictureHolder.Timestamp.setText(DateUtil.getReportDate(chatMessageBean.getTimestampe()));
+            }else{
+                pictureHolder.Timestamp.setVisibility(View.GONE);
+            }
+        }else {
+            pictureHolder.Timestamp.setText(DateUtil.getReportDate(chatMessageBean.getTimestampe()));
+        }
+
         pictureHolder.progressBar.setVisibility(View.GONE);
         pictureHolder.Percentage.setVisibility(View.GONE);
 //        pictureHolder.Userhead
@@ -168,7 +188,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
         pictureHolder.sendPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CardAcitvity.actionStart(mContext);
+                CardAcitvity.actionStart(mContext,chatMessageBean.getId());
             }
         });
         pictureHolder.sendPicture.setOnLongClickListener(new View.OnLongClickListener() {

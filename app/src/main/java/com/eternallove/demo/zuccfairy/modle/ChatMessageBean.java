@@ -23,6 +23,7 @@ public class ChatMessageBean {
         this.timestampe = timestampe;
         this.message = message;
         this.picture = picture;
+        this.id = -1;
     }
 
     public int getId() {

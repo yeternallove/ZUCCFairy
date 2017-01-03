@@ -388,7 +388,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     "            \"user_id\": \"0\",\n" +
                     "            \"account\": \"a\",\n" +
                     "            \"pwd\": \"a\",\n" +
-                    "            \"name\": \"大城\"\n" +
+                    "            \"name\": \"西瓜\"\n" +
                     "        },\n" +
                     "        {\n" +
                     "            \"user_id\": \"1\",\n" +

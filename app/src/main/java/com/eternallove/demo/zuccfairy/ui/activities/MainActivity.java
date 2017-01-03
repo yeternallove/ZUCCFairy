@@ -2,13 +2,11 @@ package com.eternallove.demo.zuccfairy.ui.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
-import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -28,14 +26,13 @@ import android.widget.Toast;
 
 import com.eternallove.demo.zuccfairy.R;
 import com.eternallove.demo.zuccfairy.db.FairyDB;
+import com.eternallove.demo.zuccfairy.modle.CardBean;
 import com.eternallove.demo.zuccfairy.modle.ChatMessageBean;
 import com.eternallove.demo.zuccfairy.ui.adapters.ChatAdapter;
 import com.eternallove.demo.zuccfairy.util.HttpHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Handler;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
@@ -64,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private List<ChatMessageBean> mList;
     private int index;
     private int hindex;
+    private int chat_id;//姑且这样吧
 //    private Map<String,String > replymap;
 
     @BindView(R.id.swipeRefreshLayout)
@@ -128,6 +126,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        replymap = fairyDB.loadReply();
         User_id = PreferenceManager.getDefaultSharedPreferences(this).getString("user_id", null);
         mList = fairyDB.loadChatAll(User_id);
+        if(mList.size()==0){
+            chat_id = -1;
+        }else {
+            chat_id = mList.get(0).getId();
+        }
         index = 0;
         hindex = Math.min(2,mList.size());
         mPastList = new ArrayList<>();
@@ -236,8 +239,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mPopupWindow.showAsDropDown(mBtnBotDir3, 0, -1 * (mViews[0].getHeight() + NUM_BOT_DIR_3 * mPopupHeight));
                 break;
             case R.id.tv_daily_punch:
-                chatMessageBean = new ChatMessageBean("laiye",User_id, System.currentTimeMillis(), null, R.drawable.calendar+"");
-                chat(chatMessageBean);
+                pushcard();
 //                CardAcitvity.actionStart(MainActivity.this);
                 mPopupWindow.dismiss();
                 break;
@@ -263,11 +265,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void chat(ChatMessageBean chatMessageBean){
+        chat_id++;
+        chatMessageBean.setId(chat_id);
         mNewList.add(chatMessageBean);
         adapter.notifyDataSetChanged();
         fairyDB.saveChat(chatMessageBean);
     }
 
+    public void pushcard(){
+        if(fairyDB.ispushCard()){
+            chatMessageBean = new ChatMessageBean("laiye",User_id, System.currentTimeMillis(), "客官您今天已经打过卡了~",null);
+        }else {
+            int type = CardAcitvity.checkTime();
+            switch (type) {
+                case 0:
+                    chatMessageBean = new ChatMessageBean("laiye", User_id, System.currentTimeMillis(), "太早啦，打卡时间为5：00 - 10:00", null);
+                    break;
+                case 1:
+                    chatMessageBean = new ChatMessageBean("laiye", User_id, System.currentTimeMillis(), "起晚了，打卡时间为5：00 - 10:00", null);
+//                    break;
+                case 2:
+                    chatMessageBean = new ChatMessageBean("laiye", User_id, System.currentTimeMillis(), null, R.drawable.calendar + "");
+                    CardBean cardBean = new CardBean(User_id, chat_id+1,chatMessageBean.getTimestampe(),1,1,100);
+                    fairyDB.saveCard(cardBean);
+                    break;
+                default:
+                    break;
+            }
+        }
+        chat(chatMessageBean);
+    }
     private class GetChat extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -294,6 +321,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
     private class SendChat extends AsyncTask<String,Void,ChatMessageBean> {
 
         @Override

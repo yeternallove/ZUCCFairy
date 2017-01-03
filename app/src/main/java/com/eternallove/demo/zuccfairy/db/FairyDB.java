@@ -6,9 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.eternallove.demo.zuccfairy.modle.AlarmBean;
+import com.eternallove.demo.zuccfairy.modle.CardBean;
 import com.eternallove.demo.zuccfairy.modle.ChatMessageBean;
 import com.eternallove.demo.zuccfairy.modle.ReplyBean;
 import com.eternallove.demo.zuccfairy.modle.UserBean;
+import com.eternallove.demo.zuccfairy.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,17 +25,15 @@ import java.util.Map;
  */
 public class FairyDB {
     public static final String DB_NAME = "Eternal";
-    public static final int VERSION = 1;
+    public static final int VERSION = 3;
 
     private static FairyDB mfairyDB;
     private SQLiteDatabase db;
-    private FairyOpenHelper fop;
     private Context mContext;
-    private FairyDB instance = null;
 
-    private FairyDB(Context context){
+    private FairyDB(Context context) {
         this.mContext = context;
-        FairyOpenHelper dbHelper = new FairyOpenHelper(context,DB_NAME,null,VERSION);
+        FairyOpenHelper dbHelper = new FairyOpenHelper(context, DB_NAME, null, VERSION);
         db = dbHelper.getWritableDatabase();
     }
 
@@ -156,12 +156,6 @@ public class FairyDB {
     }
 
     /**
-     *  public static final String CREATE_CHAT = "create table Chat(id integer primary key autoincrement,"
-     + "sender_id char(20),"
-     + "recipient_id char(20),"
-     + "timestampe long ,"
-     + "message text ,"
-     + "picture text )";
      * @param recipient_id
      * @return
      */
@@ -183,23 +177,67 @@ public class FairyDB {
         return list;
     }
 
-    public boolean deleteChat(int id){
+    public boolean deleteChat(int id) {
         final String sql_s = "SELECT * FROM Chat WHERE id = ?";
         final String sql_d = "DELETE FROM Chat WHERE id = ?";
-        Cursor c = db.rawQuery(sql_s, new String[]{id+""});
-        if(!c.moveToFirst()) {
+        Cursor c = db.rawQuery(sql_s, new String[]{id + ""});
+        if (!c.moveToFirst()) {
             return false;
         }
         c.close();
         db.execSQL(sql_d, new Object[]{id});
         return true;
     }
+
+    /**
+     * @param cardBean
+     */
+    public void saveCard(CardBean cardBean) {
+        final String sql_s = "SELECT * FROM Card WHERE chat_id = ?";
+        final String sql_i = "INSERT INTO Card (user_id,chat_id,timestampe,num,days,percentage) VALUES(?,?,?,?,?,?)";
+        Cursor c = db.rawQuery(sql_s, new String[]{cardBean.getChat_id() + ""});
+        if (c.moveToFirst()) {
+            c.close();
+            return;
+        }
+        c.close();
+        db.execSQL(sql_i,new Object[]{cardBean.getUser_id(),cardBean.getChat_id(),cardBean.getTimestampe(),
+                cardBean.getNum(),cardBean.getDays(),cardBean.getPercentage()});
+    }
+    public CardBean queryCard(int chat_id){
+        CardBean cardBean = new CardBean();
+        final String sql = "SELECT id,user_id,chat_id,timestampe,num,days,percentage FROM Card WHERE chat_id = ?";
+        Cursor c = db.rawQuery(sql,new String[]{chat_id+""});
+        if(c.moveToFirst()){
+            cardBean.setId(c.getInt(0));
+            cardBean.setUser_id(c.getString(1));
+            cardBean.setChat_id(c.getInt(2));
+            cardBean.setTimestampe(c.getLong(3));
+            cardBean.setNum(c.getInt(4));
+            cardBean.setDays(c.getInt(5));
+            cardBean.setPercentage(c.getInt(6));
+        }
+        return cardBean;
+    }
+    public boolean ispushCard(){
+        long start = DateUtil.getStartTime();
+        long end = DateUtil.getEndTime();
+        final String sql = "SELECT * FROM Card WHERE timestampe > ? AND timestampe < ?";
+        Cursor c = db.rawQuery(sql,new String[]{start+"",end+""});
+        if(c.moveToFirst()){
+            return true;
+        }
+        return false;
+    }
 //    public void saveReply(ReplyBean replyBean){
 //        final String sql_s = "SELECT * FROM Reply WHERE key = ?";
 //        final String sql_i = "INSERT INTO Reply (key,content) VALUES(?,?)";
 //        Cursor c = db.rawQuery(sql_s,new String[]{replyBean.getKey()});
-//        if(c.moveToFirst())
+//        if(c.moveToFirst()){
+//            c.close();
 //            return;
+//         }
+//        c.close();
 //        db.execSQL(sql_i,new Object[]{replyBean.getKey(),replyBean.getContent()});
 //    }
 //    public Map<String,String> loadReply(){

@@ -18,7 +18,7 @@
             android:id="@+id/headImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/p1" />
+            android:src="@drawable/ic_user_1" />
 
         <TextView
             android:layout_width="0dp"

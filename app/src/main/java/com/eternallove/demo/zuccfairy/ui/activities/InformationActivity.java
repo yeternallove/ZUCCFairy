@@ -29,7 +29,7 @@ public class InformationActivity extends Activity {
     }
 
     private void initinformationList() {
-        Information head = new Information("头像", R.drawable.p1,null);
+        Information head = new Information("头像", R.drawable.ic_user_1,null);
         informationList.add(head);
         Information nickname = new Information("昵称",-1, "西瓜");
         informationList.add(nickname);

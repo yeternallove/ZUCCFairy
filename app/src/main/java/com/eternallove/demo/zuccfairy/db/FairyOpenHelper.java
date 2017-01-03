@@ -41,9 +41,17 @@ public class FairyOpenHelper extends SQLiteOpenHelper {
     public static final String CREATE_CHAT = "create table Chat(id integer primary key autoincrement,"
             + "sender_id char(20),"
             + "recipient_id char(20),"
-            + "timestampe long ,"
+            + "timestampe integer ,"
             + "message text ,"
             + "picture text )";
+
+    public static final String CREATE_CARD = "create table Card(id integer primary key autoincrement,"
+           + "user_id char(20),"
+           + "chat_id integer,"
+           + "timestampe integer,"
+           + "num integer,"
+           + "days integer,"
+           + "percentage integer)";
 
 //    public static final String CREATE_REPLY ="create table Reply(key char(20) primary key ,"
 //            + "content text)";
@@ -57,6 +65,7 @@ public class FairyOpenHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_USER);
         db.execSQL(CREATE_ALARM);
         db.execSQL(CREATE_CHAT);
+        db.execSQL(CREATE_CARD);
     }
 
     @Override
@@ -64,6 +73,7 @@ public class FairyOpenHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists User");
         db.execSQL("drop table if exists AlarmList");
         db.execSQL("drop table if exists Chat");
+        db.execSQL("drop table if exists Card");
         onCreate(db);
     }
 }
