@@ -114,46 +114,44 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
             default:break;
         }
     }
+
     private void onBindViewMessageHolder(ChatHolder holder, int position){
         ChatMessageBean chatMessageBean = getRecivedBean(position);
         MessageHolder messageHolder = (MessageHolder) holder;
         messageHolder.ChatContent.setText(chatMessageBean.getMessage());
-        messageHolder.ChatContent.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
+        messageHolder.ChatContent.setOnLongClickListener(view -> {
 //                popupView = view;
-                PopupMenu popupMenu = new PopupMenu(mContext,view);
-                popupMenu.getMenuInflater()
-                        .inflate(R.menu.menu_clipboard,popupMenu.getMenu());
-                popupMenu.setGravity(Gravity.CENTER);
-                popupMenu.show();
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                if(item.getItemId() == R.id.action_clip_copy){
-                                    if(view instanceof TextView) {
-                                        cmb.setPrimaryClip(ClipData.newPlainText("Message",((TextView) view).getText().toString()));
-                                    }
-                                    Toast.makeText(mContext, "复制成功", Toast.LENGTH_SHORT).show();
+            PopupMenu popupMenu = new PopupMenu(mContext,view);
+            popupMenu.getMenuInflater()
+                    .inflate(R.menu.menu_clipboard,popupMenu.getMenu());
+            popupMenu.setGravity(Gravity.CENTER);
+            popupMenu.show();
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            if(item.getItemId() == R.id.action_clip_copy){
+                                if(view instanceof TextView) {
+                                    cmb.setPrimaryClip(ClipData.newPlainText("Message",((TextView) view).getText().toString()));
                                 }
-                                else if(item.getItemId() == R.id.action_clip_delete){
-                                    boolean delete;
-                                    delete= fairyDB.deleteChat(chatMessageBean.getId());
-                                    delete = removeReciveditem(position);
-                                    notifyDataSetChanged();
-                                    Toast.makeText(mContext, delete?"删除成功":"删除失败", Toast.LENGTH_SHORT).show();
-                                }
-                                return false;
+                                Toast.makeText(mContext, "复制成功", Toast.LENGTH_SHORT).show();
                             }
+                            else if(item.getItemId() == R.id.action_clip_delete){
+                                boolean delete;
+                                delete= fairyDB.deleteChat(chatMessageBean.getId());
+                                delete = removeReciveditem(position);
+                                notifyDataSetChanged();
+                                Toast.makeText(mContext, delete?"删除成功":"删除失败", Toast.LENGTH_SHORT).show();
+                            }
+                            return false;
                         }
-                );
-                return false;
-            }
+                    }
+            );
+            return false;
         });
 //        messageHolder.imgUserhead
         if(position < getItemCount()-1){
             ChatMessageBean chatMessageOld = getRecivedBean(position+1);
-            if(chatMessageOld.getTimestampe()-chatMessageBean.getTimestampe() > 1800000){
+            if(chatMessageBean.getTimestampe()-chatMessageOld.getTimestampe() > 1800000){
                 messageHolder.Timestamp.setText(DateUtil.getReportDate(chatMessageBean.getTimestampe()));
             }else{
                 messageHolder.Timestamp.setVisibility(View.GONE);
@@ -163,12 +161,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
         }
         messageHolder.UserName.setVisibility(View.GONE);
     }
+
     private void onBindViewPictureHolder(ChatHolder holder, int position){
         ChatMessageBean chatMessageBean = getRecivedBean(position);
         PictureHolder pictureHolder = (PictureHolder) holder;
         if(position < getItemCount()-1){
             ChatMessageBean chatMessageOld = getRecivedBean(position+1);
-            if(chatMessageOld.getTimestampe()-chatMessageBean.getTimestampe() > 1800000){
+            if(chatMessageBean.getTimestampe()-chatMessageOld.getTimestampe() > 1800000){
                 pictureHolder.Timestamp.setText(DateUtil.getReportDate(chatMessageBean.getTimestampe()));
             }else{
                 pictureHolder.Timestamp.setVisibility(View.GONE);
@@ -233,6 +232,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
             return mNewList.get(length  - position);
         }
     }
+
     private boolean removeReciveditem(int position){
         int length = mNewList.size();
         if(position > length ){
@@ -266,6 +266,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
             super(itemView);
         }
     }
+
     static class PictureHolder extends ChatHolder {
         @BindView(R.id.iv_sendPicture)  ImageView sendPicture;
         @BindView(R.id.progressBar_picture)     ProgressBar progressBar;

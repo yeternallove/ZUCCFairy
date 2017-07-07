@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 
 import com.eternallove.demo.zuccfairy.db.FairyDB;
 import com.eternallove.demo.zuccfairy.modle.AlarmBean;
-import com.eternallove.demo.zuccfairy.ui.activities.CalendarActivity;
 
 import java.util.Collections;
 import java.util.Comparator;

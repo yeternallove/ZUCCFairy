@@ -30,7 +30,6 @@ import com.eternallove.demo.zuccfairy.ui.activities.alarmset.SetColorActivity;
 import com.eternallove.demo.zuccfairy.ui.activities.alarmset.SetLocalActivity;
 import com.eternallove.demo.zuccfairy.ui.activities.alarmset.SetRePlayActivity;
 import com.eternallove.demo.zuccfairy.modle.AlarmBean;
-import com.eternallove.demo.zuccfairy.ui.adapters.ChatAdapter;
 import com.eternallove.demo.zuccfairy.util.ColorUtils;
 
 import java.text.SimpleDateFormat;

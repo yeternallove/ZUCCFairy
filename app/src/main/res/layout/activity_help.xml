@@ -94,5 +94,6 @@
         android:background="#ffeb3b"
         android:padding="8dp"
         android:text="提交"
+        android:id="@+id/helpSubmit"
         android:textSize="16sp" />
 </LinearLayout>

@@ -24,7 +24,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:layout_marginEnd="@dimen/margin_chat_activity"
-            android:src="@drawable/ic_useravatar"
+            android:src="@drawable/ic_user_1"
             android:scaleType="fitXY" />
 
         <TextView

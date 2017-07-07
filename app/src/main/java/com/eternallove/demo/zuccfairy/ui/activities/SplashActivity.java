@@ -1,6 +1,5 @@
 package com.eternallove.demo.zuccfairy.ui.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;

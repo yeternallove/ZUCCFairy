@@ -69,7 +69,11 @@ public class HomeActivity extends Activity {
                     Intent intent = new Intent();
                     intent.setClass(HomeActivity.this, SettingActivirty.class);
                     startActivity(intent);
-                }else if(position==2){
+                } else if(position == 1){
+                    Intent intent = new Intent();
+                    intent.setClass(HomeActivity.this, CalendarActivity.class);
+                    startActivity(intent);
+                } else if(position==2){
                     Intent intent = new Intent();
                     intent.setClass(HomeActivity.this, HelpActivity.class);
                     startActivity(intent);
@@ -85,7 +89,12 @@ public class HomeActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                 HomePage homePage = rightsList.get(position);
-                Toast.makeText(HomeActivity.this, homePage.getName(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(HomeActivity.this, homePage.getName(), Toast.LENGTH_SHORT).show();
+                if(position==0){
+                    CalendarActivity.actionStart(HomeActivity.this,true);
+                } else if(position == 1){
+                    MainActivity.actionStart(HomeActivity.this,true);
+                }
             }
             //使用了setOnItemClickListener（）方法来为ListView注册了一个监听器，
             //当用户点击了ListView中的任何一个子项就会回调onIntemClick方法

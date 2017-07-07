@@ -1,4 +1,33 @@
 <resources>
     <string name="app_name">来也</string>
+    <string name="action_comment">评论</string>
+    <string name="action_like">喜欢</string>
+    <string name="action_sign_in">登录</string>
+    <string name="action_sign_in_short">登录</string>
+    <string name="agenda_event_day_duration">天</string>
+    <string name="agenda_event_no_events">没有日程</string>
+    <string name="birthday">生日</string>
+    <string name="bot_item_1">一键</string>
+    <string name="bot_item_2">日历</string>
+    <string name="bot_item_3">我</string>
+    <string name="bot_item_send">发送</string>
+    <string name="btn_moments_text">时刻</string>
+    <string name="card_string_push">{num}人正在参与，比{percentage}%的人起的早</string>
+    <string name="checkBox_remember_pass">记住密码</string>
+    <string name="clipboard_copy">复制</string>
+    <string name="clipboard_delete">删除</string>
+    <string name="comment_me">我</string>
+    <string name="comment_reply">回复</string>
+    <string name="daily_punch">每日打卡</string>
+    <string name="day_name_format"></string>
+    <string name="error_field_required"></string>
+    <string name="exit">退出</string>
+    <string name="homepage">主页</string>
+    <string name="hours_ago"></string>
+    <string name="prompt_password">密码</string>
+    <string name="prompt_username">用户名</string>
+    <string name="send_the_content_is_empty">发送内容不能为空</string>
+    <string name="title_activity_login">登录</string>
+    <string name="today">今天</string>
 
 </resources>

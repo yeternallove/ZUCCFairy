@@ -30,7 +30,7 @@ public class HttpHandler {
 
     private static final String TAG = HttpHandler.class.getSimpleName();
     private static final String URL_KEY = "http://www.tuling123.com/openapi/api";
-    private static final String APP_KEY = "817259da4b7b4f105d1ca8d3072ed7ab";
+    private static final String APP_KEY = "8995f168133f4216b0698682d7758318";
 
     public HttpHandler() {
     }

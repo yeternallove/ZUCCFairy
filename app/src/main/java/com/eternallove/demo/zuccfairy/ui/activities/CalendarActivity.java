@@ -9,15 +9,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.provider.Settings;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +60,9 @@ public class CalendarActivity extends AppCompatActivity implements RapidFloating
 
     RapidFloatingActionHelper rfabHelper;
 
+    //返回
+    @BindView(R.id.left_menu)
+    ImageButton left_menu;
 
     //日历View
     @BindView(R.id.calendar_view)
@@ -110,6 +112,13 @@ public class CalendarActivity extends AppCompatActivity implements RapidFloating
         context.startActivity(intent);
     }
 
+    public static void actionStart(Context context, boolean is) {
+        Intent intent = new Intent();
+        intent.setClass(context, CalendarActivity.class);
+        intent.putExtra("isday", true);
+        context.startActivity(intent);
+    }
+
     private boolean isAllowAlert = false;
 
     @Override
@@ -123,6 +132,13 @@ public class CalendarActivity extends AppCompatActivity implements RapidFloating
         initLayoutView();
         setMonthTitle();
         initFab();
+        left_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.actionStart(CalendarActivity.this);
+                finish();
+            }
+        });
 
         //弹窗权限验证
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -134,6 +150,11 @@ public class CalendarActivity extends AppCompatActivity implements RapidFloating
         } else {
             SendAlarmBroadcast.startAlarmService(this);
         }
+
+//        boolean is = getIntent().getBooleanExtra("isday",false);
+//        if(is){
+//            fragment.changFrame(2);
+//        }
     }
 
     //权限申请相关方法
@@ -182,8 +203,6 @@ public class CalendarActivity extends AppCompatActivity implements RapidFloating
         FragmentTransaction transaction = manager.beginTransaction();
         fragment = new ContentFragment();
         transaction.replace(R.id.main_frame, fragment, "CONTENT_FRAGMENT");
-
-
         transaction.commit();
 
     }
@@ -284,7 +303,7 @@ public class CalendarActivity extends AppCompatActivity implements RapidFloating
             finish();
         } else if (i <= 3) {
             fragment.changFrame(i);
-
+            rfabHelper.toggleContent();
         }
     }
 
@@ -329,6 +348,15 @@ public class CalendarActivity extends AppCompatActivity implements RapidFloating
         maxDate.add(Calendar.YEAR, 1);
         //根据你传入的开始结束值，构建生成Calendar数据（各种Item，JavaBean）
         CalendarManager.getInstance(this).buildCal(minDate, maxDate, Locale.getDefault());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        boolean is = getIntent().getBooleanExtra("isday",false);
+        if(is){
+            fragment.changFrame(2);
+        }
     }
 
 }

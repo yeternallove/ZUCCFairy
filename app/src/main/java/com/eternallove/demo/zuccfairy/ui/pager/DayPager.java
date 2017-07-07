@@ -136,7 +136,7 @@ public class DayPager extends BasePager {
             @Override
             public void onItemClick(View view, int position) {
                 TextView alarm_id = (TextView) view.findViewById(R.id.Alarm_id);
-                Toast.makeText(mActivity, position + "-" + alarm_id.getText().toString(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mActivity, position + "-" + alarm_id.getText().toString(), Toast.LENGTH_SHORT).show();
                 if (!alarm_id.getText().toString().equals("0")) {
                     Intent intent = new Intent(mActivity, ScheduleDetailActivity.class);
                     intent.putExtra("id", alarm_id.getText().toString());

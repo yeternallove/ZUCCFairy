@@ -136,7 +136,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (!mayRequestContacts()) {
             return;
         }
-// List<String> countries = new ArrayList<String>();
+//        List<String> countries = new ArrayList<String>();
 //        countries.add("Afghanistan");
 //        countries.add("Albania");
 //        countries.add("Algeria");
@@ -149,7 +149,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, countries);
 //
-//        auto.setAdapter(adapter);
+//        mEmailView.setAdapter(adapter);
         getLoaderManager().initLoader(0, null, this);
     }
 
@@ -246,14 +246,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-//        return email.contains("@");
-        return true;
+        return email.contains("@");
+//        return true;
     }
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-//        return password.length() > 4;
-        return true;
+        return password.length() > 4;
+//        return true;
     }
 
     /**
@@ -386,8 +386,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     "    \"user\": [\n" +
                     "        {\n" +
                     "            \"user_id\": \"0\",\n" +
-                    "            \"account\": \"a\",\n" +
-                    "            \"pwd\": \"a\",\n" +
+                    "            \"account\": \"android@stu.zucc.edu.cn\",\n" +
+                    "            \"pwd\": \"asdfghjkl;'\",\n" +
                     "            \"name\": \"西瓜\"\n" +
                     "        },\n" +
                     "        {\n" +
@@ -421,6 +421,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if (rememberpass.isChecked()) {
                     editor.putBoolean("remember_Password", true);
                     editor.putBoolean("Login", true);
+                    editor.putString("mEmail",mAccount);
+                    editor.putString("mPassword",mPassword);
                 } else {
                     editor.putBoolean("remember_Password", false);
                 }

@@ -84,7 +84,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.setClass(context, MainActivity.class);
         context.startActivity(intent);
     }
-
+    public static void actionStart(Context context,boolean is) {
+        Intent intent = new Intent();
+        intent.setClass(context, MainActivity.class);
+        intent.putExtra("ispush",is);
+        context.startActivity(intent);
+    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -235,8 +240,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 CalendarActivity.actionStart(this);
                 break;
             case R.id.bot_dir_3:
-                mPopupWindow.setContentView(mPopupView3);
-                mPopupWindow.showAsDropDown(mBtnBotDir3, 0, -1 * (mViews[0].getHeight() + NUM_BOT_DIR_3 * mPopupHeight));
+                HomeActivity.actionStart(this);
+//                mPopupWindow.setContentView(mPopupView3);
+//                mPopupWindow.showAsDropDown(mBtnBotDir3, 0, -1 * (mViews[0].getHeight() + NUM_BOT_DIR_3 * mPopupHeight));
                 break;
             case R.id.tv_daily_punch:
                 pushcard();
@@ -244,8 +250,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mPopupWindow.dismiss();
                 break;
             case R.id.tv_homepage:
-                HomeActivity.actionStart(this);
-                mPopupWindow.dismiss();
+//                HomeActivity.actionStart(this);
+//                mPopupWindow.dismiss();
                 break;
             case R.id.btn_bot_send:
                 String msg = mEditText.getText().toString();
@@ -283,7 +289,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
                 case 1:
                     chatMessageBean = new ChatMessageBean("laiye", User_id, System.currentTimeMillis(), "起晚了，打卡时间为5：00 - 10:00", null);
-//                    break;
+                    break;
                 case 2:
                     chatMessageBean = new ChatMessageBean("laiye", User_id, System.currentTimeMillis(), null, R.drawable.calendar + "");
                     CardBean cardBean = new CardBean(User_id, chat_id+1,chatMessageBean.getTimestampe(),1,1,100);
@@ -333,6 +339,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         protected void onPostExecute(ChatMessageBean chatMessage) {
             chat(chatMessage);
+        }
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        boolean is = getIntent().getBooleanExtra("ispush",false);
+        if(is){
+            pushcard();
         }
     }
 }

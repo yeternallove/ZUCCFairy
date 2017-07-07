@@ -48,41 +48,39 @@ public class SetAlarmTimeActivity extends AppCompatActivity implements View.OnCl
         Intent intent = new Intent();
         switch (v.getId()) {
             case R.id.no_remind:
+                isChecked(false);
                 no_remind.setChecked(true);
-                min10_remind.setChecked(false);
-                hour1_remind.setChecked(false);
-                day1_remind.setChecked(false);
                 intent.putExtra("remind", "无");
                 setResult(1, intent);
                 finish();
                 break;
             case R.id.min10_remind:
+                isChecked(false);
                 min10_remind.setChecked(true);
-                no_remind.setChecked(false);
-                hour1_remind.setChecked(false);
-                day1_remind.setChecked(false);
                 intent.putExtra("remind", "提前十分钟提醒");
                 setResult(1, intent);
                 finish();
                 break;
             case R.id.hour1_remind:
+                isChecked(false);
                 hour1_remind.setChecked(true);
-                no_remind.setChecked(false);
-                min10_remind.setChecked(false);
-                day1_remind.setChecked(false);
                 intent.putExtra("remind", "提前一个小时通知");
                 setResult(1, intent);
                 finish();
                 break;
             case R.id.day1_remind:
+                isChecked(false);
                 day1_remind.setChecked(true);
-                no_remind.setChecked(false);
-                min10_remind.setChecked(false);
-                hour1_remind.setChecked(false);
                 intent.putExtra("remind", "提前一天提醒");
                 setResult(1, intent);
                 finish();
                 break;
         }
+    }
+    public void isChecked(boolean is){
+        day1_remind.setChecked(is);
+        no_remind.setChecked(is);
+        min10_remind.setChecked(is);
+        hour1_remind.setChecked(is);
     }
 }

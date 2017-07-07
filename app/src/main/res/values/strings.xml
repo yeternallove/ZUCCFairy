@@ -5,13 +5,13 @@
 
     <!-- date -->
     <string name="today">Today</string>
-    <string name="yesterday">Yesterday</string>
-    <string name="minutes_ago">{count} minutes ago</string>
-    <string name="hours_ago">{count} hours ago</string>
-    <string name="days_ago">{count} days ago</string>
-    <string name="weeks_ago">{count} weeks ago</string>
-    <string name="months_ago">{count} months ago</string>
-    <string name="years_ago">{count} years ago</string>
+    <string name="yesterday" translatable="false">Yesterday</string>
+    <string name="minutes_ago" translatable="false">{count} minutes ago</string>
+    <string name="hours_ago" translatable="false">{count} hours ago</string>
+    <string name="days_ago" translatable="false">{count} days ago</string>
+    <string name="weeks_ago" translatable="false">{count} weeks ago</string>
+    <string name="months_ago" translatable="false">{count} months ago</string>
+    <string name="years_ago" translatable="false">{count} years ago</string>
     <string name="comment_reply">\@</string>
     <string name="comment_me">me</string>
     <string name="action_like">Like</string>
@@ -26,9 +26,9 @@
     <string name="clipboard_delete">Delete</string>
 
     <!-- Calendar -->
-    <string name="month_half_name_format">MMM</string>
-    <string name="month_name_format">MMMM</string>
-    <string name="day_name_format">EEEEE</string>
+    <string name="month_half_name_format" translatable="false">MMM</string>
+    <string name="month_name_format" translatable="false">MMMM</string>
+    <string name="day_name_format" translatable="false">EEEEE</string>
 
     <!-- Agenda -->
     <string name="agenda_event_day_duration">d</string>
@@ -41,8 +41,8 @@
     <string name="bot_item_send">Send</string>
 
     <!--home activity-->
-    <string name="nickname">西瓜</string>
-    <string name="mobilePhoneNumber">17764526762</string>
+    <string name="nickname" translatable="false">西瓜</string>
+    <string name="mobilePhoneNumber" translatable="false">17764526762</string>
     <string name="exit">exit</string>
     <string name="birthday">Birthday</string>
 
@@ -51,11 +51,11 @@
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
+    <string name="error_invalid_email" translatable="false">This email address is invalid</string>
+    <string name="error_invalid_password" translatable="false">This password is too short</string>
+    <string name="error_incorrect_password" translatable="false">This password is incorrect</string>
+    <string name="error_field_required" translatable="false">This field is required</string>
+    <string name="permission_rationale" translatable="false">"Contacts permissions are needed for providing email
         completions."
     </string>
     <string name="checkBox_remember_pass">remember pass</string>

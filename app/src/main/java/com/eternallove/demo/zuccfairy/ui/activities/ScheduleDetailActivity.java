@@ -71,7 +71,7 @@ public class ScheduleDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.left_alarm_back)
     void back() {
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, CalendarActivity.class));
         finish();
     }
 
@@ -156,7 +156,7 @@ public class ScheduleDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 deteleDataById(id);
-                startActivity(new Intent(ScheduleDetailActivity.this, MainActivity.class));
+                startActivity(new Intent(ScheduleDetailActivity.this, CalendarActivity.class));
                 finish();
             }
         });
@@ -173,7 +173,7 @@ public class ScheduleDetailActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, CalendarActivity.class));
         finish();
     }
 }
